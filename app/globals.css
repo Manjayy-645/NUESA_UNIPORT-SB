@@ -1,0 +1,72 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: var(--font-fraunces), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-sans: var(--font-ibm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-ibm-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  
+  --color-primary: #0B1B3D;
+  --color-accent: #F97316;
+  --color-accent-dark: #EA580C;
+  --color-gold: #EAB308;
+  --color-success: #16A34A;
+  --color-background: #F8FAFC;
+
+  --animate-draw-grid: draw-grid 1.5s ease-out forwards;
+}
+
+@keyframes draw-grid {
+  0% {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif text-primary tracking-tight;
+  }
+  
+  h1 {
+    @apply text-3xl md:text-5xl lg:text-6xl font-semibold leading-[1.1];
+  }
+  
+  h2 {
+    @apply text-2xl md:text-3xl lg:text-4xl font-semibold leading-[1.15];
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl font-semibold leading-[1.2];
+  }
+
+  p {
+    @apply font-sans leading-relaxed max-w-[75ch];
+  }
+
+  .font-mono {
+    @apply font-mono tracking-tight;
+  }
+}
+
+@layer utilities {
+  /* Utility to remove all shadows across the app to enforce flat design */
+  .shadow-sm, .shadow, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl, .shadow-inner {
+    box-shadow: none !important;
+  }
+  
+  /* Mobile optimization utilities */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}

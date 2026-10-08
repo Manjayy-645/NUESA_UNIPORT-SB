@@ -75,7 +75,7 @@ export default function SignupPage() {
     <div className="min-h-screen bg-sand flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center mb-6">
-          <Badge variant="primary">NUESA PORTAL</Badge>
+          <Badge variant="neutral">NUESA PORTAL</Badge>
         </div>
         <h2 className="mt-2 text-center text-3xl font-serif font-bold text-primary mb-2">
           {step === 1 ? 'Verify Matriculation' : step === 2 ? 'Personal Details' : 'Review & Confirm'}

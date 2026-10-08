@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
-import { sendOtp, verifyOtpAndCreateStudent } from '@/app/auth/actions'
+import { useState } from 'react'
+import { signUpAndCreateStudent } from '@/app/auth/actions'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Check } from 'lucide-react'
@@ -27,21 +27,10 @@ export default function SignupPage() {
   const [level, setLevel] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
-  const [otp, setOtp] = useState(['', '', '', '', '', ''])
+  const [password, setPassword] = useState('')
   
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
-  const [cooldown, setCooldown] = useState(0)
-
-  const otpRefs = useRef<(HTMLInputElement | null)[]>([])
-
-  useEffect(() => {
-    let timer: NodeJS.Timeout
-    if (cooldown > 0) {
-      timer = setTimeout(() => setCooldown(cooldown - 1), 1000)
-    }
-    return () => clearTimeout(timer)
-  }, [cooldown])
 
   const matNoMatch = matNo === matNoConfirm && matNo !== ''
   const matNoValid = MAT_NO_PATTERN.test(matNo)
@@ -53,80 +42,50 @@ export default function SignupPage() {
     department !== '' &&
     level !== '' &&
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) &&
-    NIGERIAN_PHONE_PATTERN.test(phone)
+    NIGERIAN_PHONE_PATTERN.test(phone) &&
+    password.length >= 6
 
   const handleNextStep = () => {
     setError(null)
     setStep(step + 1)
   }
 
-  const handleSendOtp = async () => {
-    setLoading(true)
-    setError(null)
-    const res = await sendOtp(email)
-    
-    if (res.error) {
-      setError(res.error)
-      setLoading(false)
-      return
-    }
-    
-    setCooldown(30)
-    setLoading(false)
-    setStep(4)
-  }
-
-  const handleVerifyOtp = async () => {
-    const code = otp.join('')
-    if (code.length !== 6) {
-      setError('Please enter a 6-digit code.')
-      return
-    }
-    
+  const handleSignup = async () => {
     setLoading(true)
     setError(null)
     
-    const res = await verifyOtpAndCreateStudent(email, code, {
+    const res = await signUpAndCreateStudent(email, password, {
       mat_no: matNo,
       full_name: fullName,
       department,
       level,
-      phone
+      phone,
     })
-    
+
     if (res.error) {
       setError(res.error)
       setLoading(false)
       return
     }
-    
+
     router.push('/portal')
   }
 
-  const handleOtpChange = (index: number, value: string) => {
-    if (value.length > 1) return
-    const newOtp = [...otp]
-    newOtp[index] = value
-    setOtp(newOtp)
-    if (value && index < 5) otpRefs.current[index + 1]?.focus()
-  }
-  
-  const handleOtpKeyDown = (index: number, e: React.KeyboardEvent) => {
-    if (e.key === 'Backspace' && !otp[index] && index > 0) {
-      otpRefs.current[index - 1]?.focus()
-    }
-  }
-
   return (
-    <div className="min-h-screen bg-background flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-sand flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <Link href="/" className="inline-block text-primary/70 hover:text-accent font-medium transition-colors mb-6 text-sm">
-          Return to Website
-        </Link>
-        <h2 className="mb-6">Student Registration</h2>
+        <div className="flex justify-center mb-6">
+          <Badge variant="primary">NUESA PORTAL</Badge>
+        </div>
+        <h2 className="mt-2 text-center text-3xl font-serif font-bold text-primary mb-2">
+          {step === 1 ? 'Verify Matriculation' : step === 2 ? 'Personal Details' : 'Review & Confirm'}
+        </h2>
+        <p className="text-center text-primary/60 mb-8 font-medium">
+          {step === 1 ? 'Step 1 of 3' : step === 2 ? 'Step 2 of 3' : 'Final Step'}
+        </p>
         
-        <div className="flex items-center gap-2 mb-8">
-          {[1, 2, 3, 4].map(s => (
+        <div className="flex items-center gap-2 mb-8 justify-center">
+          {[1, 2, 3].map(s => (
             <div key={s} className="flex items-center gap-2">
               <div className={`w-6 h-6 border rounded-sm flex items-center justify-center font-mono text-xs ${
                 step === s ? 'bg-primary border-primary text-white' : 
@@ -134,7 +93,7 @@ export default function SignupPage() {
               }`}>
                 {step > s ? <Check size={12} /> : s}
               </div>
-              {s < 4 && <div className={`w-8 h-px ${step > s ? 'bg-success/30' : 'bg-primary/20'}`}></div>}
+              {s < 3 && <div className={`w-8 h-px ${step > s ? 'bg-success/30' : 'bg-primary/20'}`}></div>}
             </div>
           ))}
         </div>
@@ -218,7 +177,7 @@ export default function SignupPage() {
               </div>
 
               <Input
-                label="Email Address (for login)"
+                label="Email Address"
                 type="email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
@@ -230,6 +189,15 @@ export default function SignupPage() {
                 value={phone}
                 onChange={e => setPhone(e.target.value)}
                 placeholder="08012345678"
+              />
+
+              <Input
+                label="Create Password"
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                placeholder="Min. 6 characters"
+                error={password.length > 0 && password.length < 6 ? 'Password must be at least 6 characters' : undefined}
               />
 
               <div className="flex gap-4 pt-4">
@@ -251,55 +219,17 @@ export default function SignupPage() {
                   <Badge variant="neutral">{department} Eng.</Badge>
                   <Badge variant="neutral">{level}L</Badge>
                 </div>
+                <div className="mt-4 pt-4 border-t border-gold/20">
+                  <p className="text-sm font-medium text-primary/80">Email: {email}</p>
+                  <p className="text-sm font-medium text-primary/80">Phone: {phone}</p>
+                </div>
               </div>
 
               <div className="flex gap-4">
                 <Button onClick={() => setStep(2)} variant="secondary" className="flex-1" disabled={loading}>Edit</Button>
-                <Button onClick={handleSendOtp} variant="primary" className="flex-[2]" disabled={loading}>
-                  {loading ? 'Sending Code...' : 'Confirm & Send OTP'}
+                <Button onClick={handleSignup} variant="primary" className="flex-[2]" disabled={loading}>
+                  {loading ? 'Creating Account...' : 'Confirm & Complete'}
                 </Button>
-              </div>
-            </div>
-          )}
-
-          {step === 4 && (
-            <div className="space-y-6">
-              <div>
-                <p className="text-sm text-primary/70">We sent a 6-digit code to</p>
-                <p className="font-medium text-primary font-sans">{email}</p>
-              </div>
-
-              <div className="flex gap-2">
-                {otp.map((digit, i) => (
-                  <input
-                    key={i}
-                    ref={el => { otpRefs.current[i] = el }}
-                    type="text"
-                    inputMode="numeric"
-                    maxLength={1}
-                    value={digit}
-                    onChange={e => handleOtpChange(i, e.target.value)}
-                    onKeyDown={e => handleOtpKeyDown(i, e)}
-                    className="w-full aspect-square text-center text-xl font-mono border border-primary/20 rounded-md focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary"
-                  />
-                ))}
-              </div>
-
-              <Button onClick={handleVerifyOtp} variant="primary" fullWidth disabled={loading || otp.join('').length !== 6}>
-                {loading ? 'Verifying & Creating Account...' : 'Verify & Complete'}
-              </Button>
-
-              <div className="flex items-center justify-between text-sm mt-4">
-                <button 
-                  onClick={handleSendOtp}
-                  disabled={cooldown > 0 || loading}
-                  className="text-primary hover:text-accent font-medium disabled:text-primary/40"
-                >
-                  {cooldown > 0 ? `Resend code in ${cooldown}s` : 'Resend Code'}
-                </button>
-                <button onClick={() => setStep(3)} disabled={loading} className="text-primary/60 hover:text-primary">
-                  Change email
-                </button>
               </div>
             </div>
           )}

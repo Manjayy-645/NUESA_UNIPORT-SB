@@ -1,0 +1,54 @@
+Attached Element Context from Integrated Browser
+
+Element: div.max-w-3xl
+
+URL: http://localhost:3000/
+
+HTML Path: div.min-h-screen.flex.flex-col.bg-gray-50 > main.flex-grow > div > section.bg-uniport-navy.text-white.relative.overflow-hidden.py-20.lg:py-32.border-b-8.border-nuesa-orange > div.max-w-7xl.mx-auto.px-4.sm:px-6.lg:px-8.relative.z-10 > div.max-w-3xl
+
+Outer HTML:
+```html
+<div class="max-w-3xl"><div class="inline-block bg-white text-uniport-navy px-3 py-1 rounded-full text-xs font-bold tracking-wide mb-6 uppercase border-l-4 border-nuesa-orange">Official Website</div><h1 class="text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">Faculty of Engineering<br><span class="text-nuesa-orange">University of Port Harcourt</span></h1><p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl leading-relaxed">Welcome to the digital hub for the Nigerian Universities Engineering Students Association (NUESA), UniPort Chapter. Empowering students, fostering innovation, and engineering the future.</p><div class="flex flex-col sm:flex-row gap-4"><a class="bg-[#EA580C] hover:bg-[#C2410C] text-white font-bold py-3 px-8 rounded flex items-center justify-center gap-2 transition-transform hover:-translate-y-1" href="/portal/dues">Pay Faculty Dues <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></a><a class="bg-transparent border-2 border-white hover:bg-white hover:text-uniport-navy text-white font-bold py-3 px-8 rounded flex items-center justify-center gap-2 transition-all" href="/documents">Download Timetables</a></div></div>
+```
+
+Dimensions:
+- top: 160px
+- left: 24px
+- width: 768px
+- height: 383px
+
+CSS:
+```css
+*, :after, :before, ::backdrop { box-sizing: border-box;
+    border: 0 solid;
+    margin: 0;
+    padding: 0; }
+.max-w-3xl { max-width: var(--container-3xl); }
+
+/* Inherited */
+.text-white { color: var(--color-white) }
+html, :host { tab-size: 4; line-height: 1.5; font-family: var(--default-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"); font-feature-settings: var(--default-font-feature-settings, normal) }
+
+/* Resolved values */
+margin: 0px;
+padding: 0px;
+border: 0px solid rgb(255, 255, 255);
+box-sizing: border-box;
+color: rgb(255, 255, 255);
+display: block;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+font-feature-settings: normal;
+height: 382.5px;
+line-height: 24px;
+max-width: 768px;
+tab-size: 4;
+unicode-bidi: isolate /*UA*/;
+width: 768px;
+
+/* CSS variables */
+--container-3xl: 48rem;
+--color-white: #fff;
+--default-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+      "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol", "Noto Color Emoji";
+```

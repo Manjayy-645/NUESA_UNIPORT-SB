@@ -3,24 +3,9 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 
-export async function sendOtp(email: string) {
-  const supabase = await createClient()
-  const { error } = await supabase.auth.signInWithOtp({
-    email,
-    options: {
-      shouldCreateUser: true, // Create user if doesn't exist for signup
-    }
-  })
-
-  if (error) {
-    return { error: error.message }
-  }
-  return { success: true }
-}
-
-export async function verifyOtpAndCreateStudent(
+export async function signUpAndCreateStudent(
   email: string, 
-  otp: string, 
+  password: string, 
   studentData: {
     mat_no: string;
     full_name: string;
@@ -31,23 +16,22 @@ export async function verifyOtpAndCreateStudent(
 ) {
   const supabase = await createClient()
   
-  // 1. Verify OTP
-  const { data, error } = await supabase.auth.verifyOtp({
+  // 1. Sign up user
+  const { data, error } = await supabase.auth.signUp({
     email,
-    token: otp,
-    type: 'email'
+    password,
   })
 
   if (error) {
+    console.error('Supabase SignUp Error:', error)
     return { error: error.message }
   }
   
   if (!data.user) {
-    return { error: 'Verification failed.' }
+    return { error: 'Sign up failed.' }
   }
 
   // 2. Create student row using admin client to bypass RLS
-  // (RLS blocks inserts by default unless explicitly allowed, and we control this insertion server-side)
   const { createAdminClient } = await import('@/lib/supabase/admin')
   const adminSupabase = createAdminClient()
 
@@ -77,58 +61,12 @@ export async function verifyOtpAndCreateStudent(
   return { success: true }
 }
 
-export async function loginWithOtp(email: string) {
+export async function loginWithPassword(email: string, password: string) {
   const supabase = await createClient()
   
-  // For login, check if student exists first using an RPC or service role?
-  // We can just send OTP and check after, but requirement says:
-  // "If an email has no matching students row, show a clear message directing them to sign up instead - don't silently create a new account"
-  
-  // Since RLS is on students, we can't query by email easily unless we use the admin client.
-  const { createAdminClient } = await import('@/lib/supabase/admin')
-  const adminSupabase = createAdminClient()
-  
-  // Check if a user with this email exists in auth schema AND students table
-  // Because we don't have email in students table directly, we'd need to find the user ID.
-  // Actually, wait, Supabase admin api can get user by email.
-  const { data: { users }, error: authError } = await adminSupabase.auth.admin.listUsers()
-  const user = users.find(u => u.email === email)
-  
-  if (!user) {
-    return { error: 'No account found. Please sign up instead.' }
-  }
-  
-  const { data: student } = await adminSupabase
-    .from('students')
-    .select('id')
-    .eq('id', user.id)
-    .single()
-    
-  if (!student) {
-    return { error: 'No student record found. Please sign up instead.' }
-  }
-
-  // Safe to send OTP
-  const { error } = await supabase.auth.signInWithOtp({
+  const { error } = await supabase.auth.signInWithPassword({
     email,
-    options: {
-      shouldCreateUser: false,
-    }
-  })
-
-  if (error) {
-    return { error: error.message }
-  }
-  return { success: true }
-}
-
-export async function verifyLoginOtp(email: string, otp: string) {
-  const supabase = await createClient()
-  
-  const { error } = await supabase.auth.verifyOtp({
-    email,
-    token: otp,
-    type: 'email'
+    password,
   })
 
   if (error) {

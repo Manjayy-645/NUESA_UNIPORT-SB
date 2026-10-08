@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/Input'
 import { Badge } from '@/components/ui/Badge'
 
 const DEPARTMENTS = [
-  'Chemical', 'Civil', 'Electrical', 'Mechanical', 'Petroleum', 'Mechatronics', 'Computer'
+  'Chemical', 'Civil', 'Electrical', 'Mechanical', 'Petroleum', 'Mechatronics', 'Electronics'
 ]
 const MAT_NO_PATTERN = /^U20\d{2}\/\d{7}$/i
 const NIGERIAN_PHONE_PATTERN = /^(0)(7|8|9)(0|1)\d{8}$/

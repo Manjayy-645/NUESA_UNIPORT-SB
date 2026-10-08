@@ -15,8 +15,11 @@ export async function POST(req: Request) {
     // Generate unique reference
     const reference = `NUESA-${Date.now()}-${Math.floor(Math.random() * 1000000)}`
     
-    // Insert pending payment
-    const { error } = await supabase
+    // Insert pending payment bypassing RLS
+    const { createAdminClient } = await import('@/lib/supabase/admin')
+    const adminSupabase = createAdminClient()
+    
+    const { error } = await adminSupabase
       .from('payments')
       .insert({
         student_id: user.id,

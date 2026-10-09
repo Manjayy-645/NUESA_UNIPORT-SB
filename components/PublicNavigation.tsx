@@ -63,18 +63,20 @@ export function PublicNavigation() {
             ))}
             
             {isLoggedIn ? (
-              <Link href="/portal">
-                <Button variant="primary" className="gap-2">
-                  <LayoutDashboard size={18} />
-                  Dashboard
-                </Button>
+              <Link 
+                href="/portal"
+                className="inline-flex items-center justify-center gap-2 bg-accent text-white hover:bg-accent-dark font-medium rounded-md px-5 py-2 min-h-[44px] transition-colors"
+              >
+                <LayoutDashboard size={18} />
+                Dashboard
               </Link>
             ) : (
-              <Link href="/login">
-                <Button variant="primary" className="gap-2">
-                  <UserCircle size={18} />
-                  Portal Login
-                </Button>
+              <Link 
+                href="/login"
+                className="inline-flex items-center justify-center gap-2 bg-accent text-white hover:bg-accent-dark font-medium rounded-md px-5 py-2 min-h-[44px] transition-colors"
+              >
+                <UserCircle size={18} />
+                Portal Login
               </Link>
             )}
           </nav>
@@ -131,23 +133,19 @@ export function PublicNavigation() {
             <Link
               href="/portal"
               onClick={() => setIsOpen(false)}
-              className="block w-full"
+              className="flex items-center justify-center gap-2 w-full bg-accent text-white hover:bg-accent-dark font-medium rounded-md px-5 py-2 min-h-[52px] text-base transition-colors"
             >
-              <Button variant="primary" fullWidth className="gap-2 min-h-[52px] text-base">
-                <LayoutDashboard size={20} />
-                Dashboard
-              </Button>
+              <LayoutDashboard size={20} />
+              Dashboard
             </Link>
           ) : (
             <Link
               href="/login"
               onClick={() => setIsOpen(false)}
-              className="block w-full"
+              className="flex items-center justify-center gap-2 w-full bg-accent text-white hover:bg-accent-dark font-medium rounded-md px-5 py-2 min-h-[52px] text-base transition-colors"
             >
-              <Button variant="primary" fullWidth className="gap-2 min-h-[52px] text-base">
-                <UserCircle size={20} />
-                Portal Login
-              </Button>
+              <UserCircle size={20} />
+              Portal Login
             </Link>
           )}
         </div>

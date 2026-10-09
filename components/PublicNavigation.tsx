@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { Menu, X, UserCircle, LayoutDashboard } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
@@ -41,8 +42,9 @@ export function PublicNavigation() {
         <div className="flex justify-between items-center min-h-[64px] py-2">
           {/* Logo / Brand */}
           <div className="flex-shrink-0 flex items-center gap-3">
-            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center p-1">
-              <div className="w-full h-full rounded-full border border-primary/20 bg-primary text-white text-xs flex items-center justify-center font-serif font-bold">NP</div>
+            <div className="flex items-center gap-2">
+              <Image src="/uniport-logo.jpg" alt="UniPort Logo" width={40} height={40} className="rounded-full object-cover border border-primary/10" />
+              <Image src="/nuesa-logo.jpg" alt="NUESA Logo" width={40} height={40} className="rounded-full object-cover border border-primary/10" />
             </div>
             <div>
               <Link href="/" className="font-bold text-xl tracking-tight block font-serif">NUESA UniPort</Link>

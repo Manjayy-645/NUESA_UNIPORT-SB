@@ -1,6 +1,7 @@
 import { createAdminClient } from '@/lib/supabase/admin'
 
-export default async function VerifyReceiptPage({ params }: { params: { id: string } }) {
+export default async function VerifyReceiptPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   // We use the admin client here because this route is public, but we need to query
   // the payments table which is RLS restricted to the student who owns it.
   // We only expose limited data to verify the receipt is valid.
@@ -9,7 +10,7 @@ export default async function VerifyReceiptPage({ params }: { params: { id: stri
   const { data: payment } = await supabase
     .from('payments')
     .select('*, students(full_name, mat_no, department, level)')
-    .eq('paystack_reference', params.id)
+    .eq('paystack_reference', id)
     .single()
     
   if (!payment) {

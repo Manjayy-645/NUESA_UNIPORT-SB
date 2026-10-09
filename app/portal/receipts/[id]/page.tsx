@@ -3,7 +3,8 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { redirect } from 'next/navigation'
 import { QRCodeSVG } from 'qrcode.react'
 
-export default async function ReceiptPage({ params }: { params: { id: string } }) {
+export default async function ReceiptPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   
@@ -12,7 +13,7 @@ export default async function ReceiptPage({ params }: { params: { id: string } }
   const { data: payment } = await supabase
     .from('payments')
     .select('*, students(*)')
-    .eq('paystack_reference', params.id)
+    .eq('paystack_reference', id)
     .single()
     
   if (!payment) {
@@ -28,7 +29,7 @@ export default async function ReceiptPage({ params }: { params: { id: string } }
   // Auto-verify if still pending (handles missing/delayed webhooks)
   if (currentPayment.status === 'pending') {
     try {
-      const paystackRes = await fetch(`https://api.paystack.co/transaction/verify/${params.id}`, {
+      const paystackRes = await fetch(`https://api.paystack.co/transaction/verify/${id}`, {
         headers: {
           Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
           'Content-Type': 'application/json'
@@ -52,7 +53,7 @@ export default async function ReceiptPage({ params }: { params: { id: string } }
             paid_at: paystackData.data.paidAt || new Date().toISOString(),
             receipt_number: receiptNumber
           })
-          .eq('paystack_reference', params.id)
+          .eq('paystack_reference', id)
           .eq('status', 'pending')
           .select('*, students(*)')
           .single()

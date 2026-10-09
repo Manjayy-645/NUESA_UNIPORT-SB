@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { redirect } from 'next/navigation'
 import { QRCodeSVG } from 'qrcode.react'
 
@@ -22,10 +23,52 @@ export default async function ReceiptPage({ params }: { params: { id: string } }
     return <div className="p-8 text-center text-red-500 font-bold">Unauthorized</div>
   }
   
-  const student = payment.students
+  let currentPayment = payment;
+
+  // Auto-verify if still pending (handles missing/delayed webhooks)
+  if (currentPayment.status === 'pending') {
+    try {
+      const paystackRes = await fetch(`https://api.paystack.co/transaction/verify/${params.id}`, {
+        headers: {
+          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        cache: 'no-store'
+      })
+      
+      const paystackData = await paystackRes.json()
+      
+      if (paystackData.status && paystackData.data.status === 'success') {
+        const adminSupabase = createAdminClient()
+        
+        const year = new Date().getFullYear()
+        const randomSeq = Math.floor(1000 + Math.random() * 9000)
+        const receiptNumber = `NUESA/${year}/${randomSeq}`
+        
+        const { data: updatedPayment, error } = await adminSupabase
+          .from('payments')
+          .update({ 
+            status: 'success', 
+            paid_at: paystackData.data.paidAt || new Date().toISOString(),
+            receipt_number: receiptNumber
+          })
+          .eq('paystack_reference', params.id)
+          .eq('status', 'pending')
+          .select('*, students(*)')
+          .single()
+          
+        if (!error && updatedPayment) {
+          currentPayment = updatedPayment
+        }
+      }
+    } catch (err) {
+      console.error('Error auto-verifying payment:', err)
+    }
+  }
   
-  // URL to public verification route
-  const verificationUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/verify-receipt/${payment.paystack_reference}`
+  const student = currentPayment.students
+  
+  const verificationUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/verify-receipt/${currentPayment.paystack_reference}`
 
   return (
     <div className="max-w-3xl mx-auto p-8 mt-8">
@@ -36,16 +79,22 @@ export default async function ReceiptPage({ params }: { params: { id: string } }
           <div>
             <h1 className="text-3xl font-black text-uniport-navy tracking-tight">NUESA UNIPORT</h1>
             <p className="text-gray-500 font-medium">Faculty of Engineering, University of Port Harcourt</p>
-            <div className="mt-4 inline-block bg-[#DCFCE7] text-[#166534] px-3 py-1 rounded-full text-sm font-bold border border-[#166534] border-opacity-20">
-              OFFICIAL RECEIPT
-            </div>
+            {currentPayment.status === 'success' ? (
+              <div className="mt-4 inline-block bg-[#DCFCE7] text-[#166534] px-3 py-1 rounded-full text-sm font-bold border border-[#166534] border-opacity-20">
+                OFFICIAL RECEIPT
+              </div>
+            ) : (
+              <div className="mt-4 inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-bold border border-yellow-800 border-opacity-20">
+                PAYMENT PENDING
+              </div>
+            )}
           </div>
           <div className="text-right">
             <p className="text-sm text-gray-500 uppercase tracking-wide font-semibold">Receipt No.</p>
-            <p className="text-xl font-bold text-gray-900">{payment.receipt_number || 'PENDING'}</p>
+            <p className="text-xl font-bold text-gray-900">{currentPayment.receipt_number || 'PENDING'}</p>
             <p className="text-sm text-gray-500 mt-2">Date Paid</p>
             <p className="font-medium text-gray-900">
-              {payment.paid_at ? new Date(payment.paid_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Processing...'}
+              {currentPayment.paid_at ? new Date(currentPayment.paid_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }) : 'Processing...'}
             </p>
           </div>
         </div>
@@ -77,14 +126,14 @@ export default async function ReceiptPage({ params }: { params: { id: string } }
             <tbody className="divide-y divide-gray-200">
               <tr>
                 <td className="px-6 py-4 font-medium text-gray-900">Annual Faculty Dues</td>
-                <td className="px-6 py-4 text-gray-700">{payment.session}</td>
-                <td className="px-6 py-4 text-right font-bold text-gray-900">₦{payment.amount.toLocaleString()}</td>
+                <td className="px-6 py-4 text-gray-700">{currentPayment.session}</td>
+                <td className="px-6 py-4 text-right font-bold text-gray-900">₦{currentPayment.amount.toLocaleString()}</td>
               </tr>
             </tbody>
             <tfoot className="bg-gray-50">
               <tr>
                 <td colSpan={2} className="px-6 py-4 text-right font-bold text-gray-900 uppercase">Total Paid</td>
-                <td className="px-6 py-4 text-right font-black text-xl text-uniport-navy">₦{payment.amount.toLocaleString()}</td>
+                <td className="px-6 py-4 text-right font-black text-xl text-uniport-navy">₦{currentPayment.amount.toLocaleString()}</td>
               </tr>
             </tfoot>
           </table>
@@ -94,14 +143,16 @@ export default async function ReceiptPage({ params }: { params: { id: string } }
         <div className="flex justify-between items-end pt-8 border-t-2 border-gray-100">
           <div>
             <p className="text-sm text-gray-500 mb-1">Transaction Reference:</p>
-            <p className="font-mono text-xs text-gray-400 bg-gray-50 p-2 rounded">{payment.paystack_reference}</p>
+            <p className="font-mono text-xs text-gray-400 bg-gray-50 p-2 rounded">{currentPayment.paystack_reference}</p>
           </div>
-          <div className="text-center">
-            <div className="bg-white p-2 border border-gray-200 rounded shadow-sm inline-block mb-2">
-              <QRCodeSVG value={verificationUrl} size={100} />
+          {currentPayment.status === 'success' && (
+            <div className="text-center">
+              <div className="bg-white p-2 border border-gray-200 rounded shadow-sm inline-block mb-2">
+                <QRCodeSVG value={verificationUrl} size={100} />
+              </div>
+              <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Scan to Verify</p>
             </div>
-            <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">Scan to Verify</p>
-          </div>
+          )}
         </div>
         
         {/* Print Button (Client Side) */}

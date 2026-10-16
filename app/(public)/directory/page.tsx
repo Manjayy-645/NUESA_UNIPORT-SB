@@ -7,12 +7,13 @@ import { Badge } from '@/components/ui/Badge'
 export default async function DirectoryPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | undefined }
+  searchParams: Promise<{ [key: string]: string | undefined }>
 }) {
+  const resolvedSearchParams = await searchParams
   const supabase = await createClient()
   
-  const activeTab = searchParams.tab || 'faculty'
-  const tenure = searchParams.tenure || 'current'
+  const activeTab = resolvedSearchParams.tab || 'faculty'
+  const tenure = resolvedSearchParams.tenure || 'current'
   
   let hierarchyFilter: string[] = []
   

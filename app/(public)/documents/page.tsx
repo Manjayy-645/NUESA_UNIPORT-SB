@@ -8,10 +8,11 @@ import { Badge } from '@/components/ui/Badge'
 export default async function DocumentsPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | undefined }
+  searchParams: Promise<{ [key: string]: string | undefined }>
 }) {
+  const resolvedSearchParams = await searchParams
   const supabase = await createClient()
-  const activeCategory = searchParams.category || 'all'
+  const activeCategory = resolvedSearchParams.category || 'all'
   
   let query = supabase
     .from('documents')

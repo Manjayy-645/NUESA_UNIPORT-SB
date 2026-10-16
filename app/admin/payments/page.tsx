@@ -4,14 +4,15 @@ import { ExportCSVButton } from '@/components/ExportCSVButton'
 export default async function AdminPaymentsPage({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) {
+  const resolvedSearchParams = await searchParams
   const supabase = createAdminClient()
   
   // Basic filtering from URL search params (placeholder for actual interactive filters)
-  const sessionFilter = searchParams.session as string
-  const statusFilter = searchParams.status as string
-  const search = searchParams.search as string
+  const sessionFilter = resolvedSearchParams.session as string
+  const statusFilter = resolvedSearchParams.status as string
+  const search = resolvedSearchParams.search as string
   
   let query = supabase
     .from('payments')

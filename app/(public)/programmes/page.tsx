@@ -7,6 +7,7 @@ import {
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
+import { MetiPathwayCard } from '@/components/MetiPathwayCard'
 
 export const metadata: Metadata = {
   title: 'Programmes Offered | Department of Electrical & Electronic Engineering',
@@ -280,6 +281,11 @@ export default function ProgrammesPage() {
             </div>
           </div>
         </div>
+
+        {/* Postgraduate & Innovation Pathways (METI) */}
+        <section aria-labelledby="meti-pathway-heading" className="mb-16">
+          <MetiPathwayCard />
+        </section>
 
         {/* Postgraduate Programmes & Admission Requirements */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">

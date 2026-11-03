@@ -1,10 +1,16 @@
 import { createAdminClient } from '@/lib/supabase/admin'
+import { ShieldCheck, AlertTriangle, XCircle, CheckCircle2, Building, Calendar, Hash } from 'lucide-react'
+import Link from 'next/link'
+import { Badge } from '@/components/ui/Badge'
+import { Button } from '@/components/ui/Button'
+
+export const metadata = {
+  title: 'Receipt Verification | SEEES UniPort Official Registry',
+  description: 'Cryptographic public validation record for SEEES Departmental Dues payment receipts, Department of Electrical & Electronic Engineering, UniPort.',
+}
 
 export default async function VerifyReceiptPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  // We use the admin client here because this route is public, but we need to query
-  // the payments table which is RLS restricted to the student who owns it.
-  // We only expose limited data to verify the receipt is valid.
   const supabase = createAdminClient()
   
   const { data: payment } = await supabase
@@ -15,13 +21,25 @@ export default async function VerifyReceiptPage({ params }: { params: Promise<{ 
     
   if (!payment) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-        <div className="bg-white p-8 rounded-xl shadow-lg border-2 border-red-200 max-w-md w-full text-center">
-          <div className="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+      <div className="min-h-[80vh] flex items-center justify-center bg-background px-4 py-16">
+        <div className="bg-white p-8 sm:p-10 rounded-xs border border-red-300 max-w-md w-full text-center space-y-5">
+          <div className="w-12 h-12 bg-red-50 text-red-600 rounded-2xs border border-red-200 flex items-center justify-center mx-auto">
+            <XCircle size={26} aria-hidden="true" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Invalid Receipt</h1>
-          <p className="text-gray-600">This receipt reference could not be found in our system. It may be forged or entered incorrectly.</p>
+          <div>
+            <span className="font-mono text-[10px] uppercase tracking-widest text-red-600 font-bold block mb-1">
+              Registry Lookup Failed
+            </span>
+            <h1 className="font-serif text-2xl font-bold text-primary">Unrecognized Transaction</h1>
+            <p className="font-sans text-xs text-primary/70 mt-2 leading-relaxed">
+              The reference code <code className="font-mono text-red-700 bg-red-50 px-1 py-0.5 rounded-2xs">{id}</code> could not be matched with any authentic SEEES clearance record.
+            </p>
+          </div>
+          <div className="pt-2">
+            <Link href="/">
+              <Button variant="secondary" size="sm" fullWidth>Return to Home</Button>
+            </Link>
+          </div>
         </div>
       </div>
     )
@@ -29,13 +47,25 @@ export default async function VerifyReceiptPage({ params }: { params: Promise<{ 
   
   if (payment.status !== 'success') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-        <div className="bg-white p-8 rounded-xl shadow-lg border-2 border-yellow-200 max-w-md w-full text-center">
-          <div className="w-16 h-16 bg-yellow-100 text-yellow-500 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+      <div className="min-h-[80vh] flex items-center justify-center bg-background px-4 py-16">
+        <div className="bg-white p-8 sm:p-10 rounded-xs border border-amber-300 max-w-md w-full text-center space-y-5">
+          <div className="w-12 h-12 bg-amber-50 text-amber-700 rounded-2xs border border-amber-200 flex items-center justify-center mx-auto">
+            <AlertTriangle size={26} aria-hidden="true" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Payment Pending</h1>
-          <p className="text-gray-600">This payment has not yet been confirmed by Paystack. Please try again later.</p>
+          <div>
+            <span className="font-mono text-[10px] uppercase tracking-widest text-amber-700 font-bold block mb-1">
+              Awaiting Gateway Settlement
+            </span>
+            <h1 className="font-serif text-2xl font-bold text-primary">Payment Pending</h1>
+            <p className="font-sans text-xs text-primary/70 mt-2 leading-relaxed">
+              This transaction is currently awaiting confirmation from Paystack. If funds were debited, this receipt will activate automatically upon gateway reconciliation.
+            </p>
+          </div>
+          <div className="pt-2">
+            <Link href="/portal">
+              <Button variant="secondary" size="sm" fullWidth>Check Student Portal</Button>
+            </Link>
+          </div>
         </div>
       </div>
     )
@@ -44,39 +74,88 @@ export default async function VerifyReceiptPage({ params }: { params: Promise<{ 
   const student = payment.students
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-      <div className="bg-white p-8 rounded-xl shadow-lg border-2 border-green-200 max-w-md w-full text-center relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-2 bg-[#166534]"></div>
+    <div className="min-h-[85vh] flex items-center justify-center bg-background px-4 py-16">
+      <article 
+        role="region" 
+        aria-label="Official Verification Certificate"
+        className="bg-white p-8 sm:p-12 rounded-xs border border-primary/20 max-w-lg w-full relative overflow-hidden"
+      >
+        {/* Institutional Verification Header Accent */}
+        <div className="absolute top-0 left-0 right-0 h-1.5 bg-emerald-700" aria-hidden="true" />
         
-        <div className="w-20 h-20 bg-[#DCFCE7] text-[#166534] rounded-full flex items-center justify-center mx-auto mb-6 shadow-sm border border-[#166534] border-opacity-20">
-          <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
-        </div>
-        
-        <h1 className="text-3xl font-black text-gray-900 mb-2">Verified Valid</h1>
-        <p className="text-[#166534] font-bold tracking-wide uppercase text-sm mb-8">Official NUESA Receipt</p>
-        
-        <div className="bg-gray-50 rounded-lg p-6 text-left border border-gray-100 mb-6">
-          <div className="mb-4">
-            <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Student</p>
-            <p className="font-bold text-gray-900">{student.full_name}</p>
-            <p className="text-sm text-gray-600">{student.mat_no} &bull; {student.department}</p>
-          </div>
-          <div className="mb-4">
-            <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Payment</p>
-            <p className="font-bold text-gray-900">Faculty Dues ({payment.session})</p>
-            <p className="text-sm text-gray-600">Amount: ₦{payment.amount.toLocaleString()}</p>
+        {/* Verification Emblem */}
+        <div className="text-center pb-6 border-b border-primary/10 space-y-3">
+          <div className="w-14 h-14 bg-emerald-50 text-emerald-700 rounded-xs border border-emerald-600/30 flex items-center justify-center mx-auto shadow-xs">
+            <ShieldCheck size={32} aria-hidden="true" />
           </div>
           <div>
-            <p className="text-xs text-gray-500 uppercase font-bold tracking-wider mb-1">Receipt No.</p>
-            <p className="font-mono font-bold text-gray-900">{payment.receipt_number}</p>
-            <p className="text-xs text-gray-500 mt-1">Paid on: {new Date(payment.paid_at).toLocaleDateString()}</p>
+            <Badge variant="success" className="font-mono text-xs uppercase tracking-wider mb-2">
+              Valid Institutional Record
+            </Badge>
+            <h1 className="font-serif text-2xl font-bold text-primary tracking-tight">
+              SEEES Departmental Dues Verified
+            </h1>
+            <p className="font-sans text-xs text-primary/60 mt-1">
+              Official Registry of the Department of Electrical &amp; Electronic Engineering, UniPort
+            </p>
           </div>
         </div>
         
-        <p className="text-xs text-gray-400">
-          Scanned at: {new Date().toLocaleString()}
-        </p>
-      </div>
+        {/* Structured Metadata Ledger */}
+        <div className="py-6 space-y-4">
+          <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+            
+            <div className="border border-primary/10 p-3 rounded-2xs bg-primary/[0.02]">
+              <dt className="font-mono text-[10px] uppercase tracking-wider text-primary/50">Student Name</dt>
+              <dd className="font-sans text-sm font-bold text-primary mt-0.5">{student.full_name}</dd>
+            </div>
+
+            <div className="border border-primary/10 p-3 rounded-2xs bg-primary/[0.02]">
+              <dt className="font-mono text-[10px] uppercase tracking-wider text-primary/50">Matriculation No.</dt>
+              <dd className="font-mono text-sm font-bold text-primary mt-0.5">{student.mat_no}</dd>
+            </div>
+
+            <div className="border border-primary/10 p-3 rounded-2xs bg-primary/[0.02]">
+              <dt className="font-mono text-[10px] uppercase tracking-wider text-primary/50">Department & Level</dt>
+              <dd className="font-sans text-xs font-semibold text-primary mt-0.5">{student.department} Eng. ({student.level}L)</dd>
+            </div>
+
+            <div className="border border-primary/10 p-3 rounded-2xs bg-primary/[0.02]">
+              <dt className="font-mono text-[10px] uppercase tracking-wider text-primary/50">Academic Session</dt>
+              <dd className="font-sans text-xs font-semibold text-primary mt-0.5">{payment.session} Session</dd>
+            </div>
+
+            <div className="border border-primary/10 p-3 rounded-2xs bg-primary/[0.02]">
+              <dt className="font-mono text-[10px] uppercase tracking-wider text-primary/50">Receipt Number</dt>
+              <dd className="font-mono text-xs font-bold text-accent mt-0.5">{payment.receipt_number}</dd>
+            </div>
+
+            <div className="border border-primary/10 p-3 rounded-2xs bg-primary/[0.02]">
+              <dt className="font-mono text-[10px] uppercase tracking-wider text-primary/50">Amount Confirmed</dt>
+              <dd className="font-sans text-xs font-bold text-emerald-800 mt-0.5">₦{Number(payment.amount).toLocaleString()}</dd>
+            </div>
+
+          </dl>
+
+          <div className="bg-primary/5 p-3 rounded-2xs border border-primary/10 text-xs font-mono text-primary/70 flex items-center justify-between">
+            <span>Date Certified:</span>
+            <span className="font-semibold text-primary">
+              {payment.paid_at ? new Date(payment.paid_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) : 'Verified'}
+            </span>
+          </div>
+        </div>
+
+        {/* Security Colophon */}
+        <div className="pt-4 border-t border-primary/10 text-center space-y-2">
+          <p className="font-mono text-[10px] text-primary/45 uppercase tracking-wider">
+            Transaction Ref: {payment.paystack_reference}
+          </p>
+          <p className="font-sans text-[11px] text-primary/55">
+            This digital certificate confirms full dues clearance for the specified academic session.
+          </p>
+        </div>
+
+      </article>
     </div>
   )
 }

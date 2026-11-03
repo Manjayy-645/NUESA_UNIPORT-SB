@@ -75,3 +75,44 @@ export async function loginWithPassword(email: string, password: string) {
 
   return { success: true }
 }
+
+/**
+ * Supabase OTP Authentication: sends a one-time password or magic link to the user's email
+ */
+export async function sendOtp(email: string) {
+  const supabase = await createClient()
+  
+  const { data, error } = await supabase.auth.signInWithOtp({
+    email,
+    options: {
+      shouldCreateUser: false,
+    }
+  })
+
+  if (error) {
+    console.error('Supabase OTP Send Error:', error)
+    return { error: error.message }
+  }
+
+  return { success: true, data }
+}
+
+/**
+ * Supabase OTP Verification: verifies the token/code received by the student
+ */
+export async function verifyOtp(email: string, token: string) {
+  const supabase = await createClient()
+
+  const { data, error } = await supabase.auth.verifyOtp({
+    email,
+    token,
+    type: 'email'
+  })
+
+  if (error) {
+    console.error('Supabase OTP Verify Error:', error)
+    return { error: error.message }
+  }
+
+  return { success: true, data }
+}

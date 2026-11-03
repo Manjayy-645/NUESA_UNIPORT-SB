@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 export async function POST(req: Request) {
   try {
@@ -12,8 +13,6 @@ export async function POST(req: Request) {
     
     const { studentId, amount, session, semester } = await req.json()
     
-    // Import admin client early since we need it for checks and inserts
-    const { createAdminClient } = await import('@/lib/supabase/admin')
     const adminSupabase = createAdminClient()
     
     // Prevent duplicate payments for the same session
@@ -34,8 +33,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ reference: existingPayment.paystack_reference })
     }
     
-    // Generate unique reference
-    const reference = `NUESA-${Date.now()}-${Math.floor(Math.random() * 1000000)}`
+    // Generate unique reference with SEEES prefix
+    const reference = `SEEES-${Date.now()}-${Math.floor(Math.random() * 1000000)}`
     
     const { error } = await adminSupabase
       .from('payments')

@@ -1,7 +1,7 @@
 {
-  "name": "website",
+  "name": "seees-uniport-website",
   "version": "1.0.0",
-  "description": "this is the official nuesa uniport sb website repo",
+  "description": "Official SEEES UniPort Website - Society of Electrical & Electronic Engineering Students, Department of Electrical & Electronic Engineering",
   "main": "index.js",
   "type": "module",
   "directories": {

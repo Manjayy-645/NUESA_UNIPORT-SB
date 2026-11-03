@@ -5,13 +5,19 @@
   --font-sans: var(--font-ibm-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-ibm-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   
-  --color-primary: #0B1B3D;
-  --color-accent: #F97316;
-  --color-accent-dark: #EA580C;
-  --color-gold: #EAB308;
-  --color-success: #16A34A;
-  --color-background: #F8FAFC;
+  --color-primary: #1E3A8A;
+  --color-primary-light: #1E40AF;
+  --color-electric: #1E3A8A;
+  --color-electric-light: #3B82F6;
+  --color-accent: #DC2626;
+  --color-accent-dark: #B91C1C;
+  --color-seees-blue: #1E3A8A;
+  --color-seees-red: #DC2626;
+  --color-success: #10B981;
+  --color-background: #FFFFFF;
+  --color-slate-50: #F8FAFC;
 
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
   --animate-draw-grid: draw-grid 1.5s ease-out forwards;
 }
 
@@ -56,6 +62,16 @@
   /* Utility to remove all shadows across the app to enforce flat design */
   .shadow-sm, .shadow, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl, .shadow-inner {
     box-shadow: none !important;
+  }
+
+  /* Micro-interaction spring timing utility */
+  .transition-spring {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* High-contrast accessible focus ring */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background;
   }
   
   /* Mobile optimization utilities */

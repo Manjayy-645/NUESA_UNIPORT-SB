@@ -15,8 +15,8 @@ export default async function DirectoryManagerPage() {
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-2xl sm:text-3xl font-serif text-primary font-bold mb-2">Directory Management</h1>
-        <p className="text-primary/70 font-sans">Manage faculty leadership and student executive profiles.</p>
+        <h1 className="text-2xl sm:text-3xl font-serif text-primary font-bold mb-2">Department Directory Management</h1>
+        <p className="text-primary/70 font-sans">Manage heads of department, staff advisors, academic lecturers, and SEEES student executive profiles.</p>
       </div>
       
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">

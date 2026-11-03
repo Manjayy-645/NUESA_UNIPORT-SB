@@ -64,15 +64,23 @@ export function CheckoutButton({ studentId, email, amount, session, semester }: 
   }
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center w-full max-w-sm">
       <Button 
         onClick={handlePayment} 
         disabled={loading}
+        isLoading={loading}
         variant="primary"
+        size="lg"
+        fullWidth
+        className="font-sans font-semibold tracking-wide"
       >
-        {loading ? 'Initializing...' : `Pay ₦${amount}`}
+        <span>Pay Faculty Dues (₦{amount.toLocaleString()})</span>
       </Button>
-      {errorMsg && <p className="text-destructive text-sm mt-2">{errorMsg}</p>}
+      {errorMsg && (
+        <p className="text-red-600 font-sans text-xs mt-3 text-center" role="alert">
+          {errorMsg}
+        </p>
+      )}
     </div>
   )
 }

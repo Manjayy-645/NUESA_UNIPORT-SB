@@ -1,6 +1,6 @@
 import { PublicNavigation } from '@/components/PublicNavigation'
 import Link from 'next/link'
-import { Mail, MapPin } from 'lucide-react'
+import { Mail, MapPin, ArrowUpRight, GraduationCap } from 'lucide-react'
 
 export default function PublicLayout({
   children,
@@ -8,62 +8,134 @@ export default function PublicLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-white text-blue-900 selection:bg-red-600/20">
+      {/* Skip to Main Content Link for WCAG Keyboard Navigation */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 px-4 py-2 bg-red-600 text-white font-medium text-sm rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-900"
+      >
+        Skip to main content
+      </a>
+
       <PublicNavigation />
       
-      <main className="flex-grow">
+      <main id="main-content" tabIndex={-1} className="flex-grow focus:outline-none">
         {children}
       </main>
 
-      <footer className="bg-uniport-navy text-gray-300 py-12 border-t-[6px] border-nuesa-orange">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="col-span-1 md:col-span-2">
-              <h3 className="text-white text-xl font-bold mb-4">NUESA UniPort Chapter</h3>
-              <p className="text-sm mb-4 max-w-md">
-                The Nigerian Universities Engineering Students Association (NUESA), 
-                University of Port Harcourt Chapter. Creating a platform for engineering 
-                excellence, innovation, and student welfare.
-              </p>
-              <div className="flex items-center gap-2 text-sm">
-                <MapPin size={16} className="text-nuesa-orange" />
-                <span>Faculty of Engineering, Choba Campus, Port Harcourt, Rivers State.</span>
-              </div>
-            </div>
+      {/* Institutional Editorial Footer */}
+      <footer role="contentinfo" className="bg-blue-900 text-white border-t-4 border-red-600">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-12 border-b border-white/10">
             
-            <div>
-              <h3 className="text-white text-lg font-bold mb-4">Quick Links</h3>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="/" className="hover:text-nuesa-orange transition-colors">Home</Link></li>
-                <li><Link href="/directory" className="hover:text-nuesa-orange transition-colors">Directory</Link></li>
-                <li><Link href="/documents" className="hover:text-nuesa-orange transition-colors">Timetables & Calendars</Link></li>
-                <li><Link href="/portal/dues" className="hover:text-nuesa-orange transition-colors">Pay Faculty Dues</Link></li>
+            {/* SEEES Identity & Charter */}
+            <div className="lg:col-span-5 space-y-4">
+              <div className="flex items-center gap-2">
+                <span className="w-2.5 h-2.5 bg-red-600 rounded-2xs inline-block" aria-hidden="true" />
+                <span className="font-mono text-xs uppercase tracking-widest text-red-400 font-semibold">
+                  Departmental Chapter
+                </span>
+              </div>
+              <h2 className="font-serif text-2xl lg:text-3xl font-bold text-white tracking-tight leading-tight">
+                Society of Electrical and Electronic Engineering Students
+              </h2>
+              <p className="text-white/70 text-sm font-sans max-w-md leading-relaxed">
+                University of Port Harcourt Chapter. Fostering rigorous academic culture, technical innovation, professional development, and student leadership across all accredited Electrical &amp; Electronic Engineering options.
+              </p>
+              <address className="not-italic text-xs text-white/60 flex items-start gap-2 pt-2">
+                <MapPin size={16} className="text-red-500 shrink-0 mt-0.5" aria-hidden="true" />
+                <span>Department of Electrical &amp; Electronic Engineering, Choba Park, University of Port Harcourt, PMB 5323, Rivers State, Nigeria.</span>
+              </address>
+            </div>
+
+            {/* Academic Specializations */}
+            <div className="lg:col-span-3 space-y-3">
+              <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-white/90 pb-1 border-b border-white/10 inline-block">
+                Academic Options (B.Eng)
+              </h3>
+              <ul className="space-y-1.5 text-xs text-white/70 font-sans">
+                <li><Link href="/programmes" className="hover:text-red-400 transition-colors">Power Systems &amp; High Voltage</Link></li>
+                <li><Link href="/programmes" className="hover:text-red-400 transition-colors">Telecommunications &amp; RF Engineering</Link></li>
+                <li><Link href="/programmes" className="hover:text-red-400 transition-colors">Electronics &amp; Embedded Systems</Link></li>
+                <li><Link href="/programmes" className="hover:text-red-400 transition-colors">Control Systems &amp; Industrial Automation</Link></li>
+                <li><Link href="/programmes" className="hover:text-red-400 transition-colors">Computer Engineering &amp; Robotics</Link></li>
               </ul>
             </div>
-            
-            <div>
-              <h3 className="text-white text-lg font-bold mb-4">Connect With Us</h3>
-              <div className="flex space-x-4 mb-4">
-                <a href="#" className="w-10 h-10 rounded-full bg-blue-900 flex items-center justify-center hover:bg-nuesa-orange transition-colors text-white">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-blue-900 flex items-center justify-center hover:bg-nuesa-orange transition-colors text-white">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
-                </a>
-                <a href="#" className="w-10 h-10 rounded-full bg-blue-900 flex items-center justify-center hover:bg-nuesa-orange transition-colors text-white">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                </a>
-              </div>
-              <div className="flex items-center gap-2 text-sm mt-4">
-                <Mail size={16} className="text-nuesa-orange" />
-                <span>contact@nuesauniport.edu.ng</span>
+
+            {/* Quick Access */}
+            <div className="lg:col-span-2 space-y-3">
+              <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-white/90 pb-1 border-b border-white/10 inline-block">
+                Academic Links
+              </h3>
+              <ul className="space-y-2 text-xs text-white/75 font-sans">
+                <li>
+                  <Link href="/programmes" className="hover:text-red-400 transition-colors">
+                    B.Eng Programmes
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/staff" className="hover:text-red-400 transition-colors">
+                    Staff &amp; Qualifications
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/about" className="hover:text-red-400 transition-colors">
+                    About SEEES
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/directory" className="hover:text-red-400 transition-colors">
+                    Official Directory
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/documents" className="hover:text-red-400 transition-colors">
+                    Timetables &amp; Calendars
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/portal/dues" className="hover:text-red-400 transition-colors inline-flex items-center gap-1 font-semibold text-red-400">
+                    Pay Departmental Dues <ArrowUpRight size={12} aria-hidden="true" />
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Institutional Verification & Contact */}
+            <div className="lg:col-span-2 space-y-3">
+              <h3 className="font-mono text-xs font-semibold uppercase tracking-wider text-white/90 pb-1 border-b border-white/10 inline-block">
+                Verification &amp; Contact
+              </h3>
+              <div className="space-y-2.5 text-xs font-sans text-white/70">
+                <p>Verify official SEEES dues payment receipts via the digital QR-code scanner or receipt validator.</p>
+                <div className="flex items-center gap-2 pt-1 text-white/80">
+                  <Mail size={14} className="text-red-500" aria-hidden="true" />
+                  <a href="mailto:contact@seeesuniport.edu.ng" className="hover:text-red-400 underline transition-colors">
+                    contact@seeesuniport.edu.ng
+                  </a>
+                </div>
+                <div className="pt-2">
+                  <Link 
+                    href="/login" 
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-white/90 hover:text-white bg-white/10 hover:bg-white/15 px-3 py-2 rounded-xs border border-white/15 transition-colors"
+                  >
+                    <GraduationCap size={14} aria-hidden="true" />
+                    <span>Portal Authentication</span>
+                  </Link>
+                </div>
               </div>
             </div>
+
           </div>
-          
-          <div className="border-t border-blue-900 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-xs">
-            <p>&copy; {new Date().getFullYear()} NUESA UniPort. All rights reserved.</p>
-            <p className="mt-2 md:mt-0 italic">"Engineering the Future"</p>
+
+          {/* Bottom Colophon */}
+          <div className="pt-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs font-mono text-white/50">
+            <p>
+              &copy; {new Date().getFullYear()} SEEES UniPort Chapter. All rights reserved.
+            </p>
+            <p className="tracking-wide">
+              Motto: <span className="text-white/80 font-serif italic">"Wiring the Future through Innovation &amp; Excellence"</span>
+            </p>
           </div>
         </div>
       </footer>

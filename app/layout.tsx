@@ -21,8 +21,8 @@ const ibmPlexMono = IBM_Plex_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'NUESA UniPort',
-  description: 'Nigerian Universities Engineering Students Association, University of Port Harcourt Chapter',
+  title: 'SEEES UniPort | Society of Electrical and Electronic Engineering Students',
+  description: 'Official digital portal for the Society of Electrical and Electronic Engineering Students (SEEES), Department of Electrical & Electronic Engineering, University of Port Harcourt.',
 }
 
 export default function RootLayout({
@@ -32,7 +32,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${fraunces.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}>
-      <body className="bg-background text-primary font-sans antialiased selection:bg-accent/20">
+      <body className="bg-background text-primary font-sans antialiased selection:bg-accent/30 selection:text-primary">
         {children}
       </body>
     </html>

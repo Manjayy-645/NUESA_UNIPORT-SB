@@ -1,24 +1,54 @@
 'use client'
 
-export function ExportCSVButton({ data }: { data: any[] }) {
+import React from 'react'
+import { Download } from 'lucide-react'
+import { Button } from '@/components/ui/Button'
+
+export interface PaymentExportRecord {
+  receipt_number?: string | null
+  paystack_reference: string
+  amount: number | string
+  session: string
+  status: string
+  paid_at?: string | null
+  students?: {
+    full_name?: string
+    mat_no?: string
+    department?: string
+    level?: string
+  } | null
+}
+
+export function ExportCSVButton({ data }: { data: PaymentExportRecord[] }) {
   const handleExport = () => {
-    if (data.length === 0) return
+    if (!data || data.length === 0) return
     
     // Define headers
-    const headers = ['Receipt No', 'Reference', 'Student Name', 'Mat No', 'Department', 'Level', 'Amount', 'Session', 'Status', 'Date']
+    const headers = [
+      'Receipt No', 
+      'Paystack Reference', 
+      'Student Name', 
+      'Matriculation No', 
+      'Department', 
+      'Level', 
+      'Amount (NGN)', 
+      'Session', 
+      'Clearance Status', 
+      'Paid Timestamp'
+    ]
     
     // Map data
     const csvRows = data.map(payment => [
-      payment.receipt_number || 'N/A',
+      payment.receipt_number || 'PENDING',
       payment.paystack_reference,
-      `"${payment.students?.full_name || ''}"`,
+      `"${(payment.students?.full_name || '').replace(/"/g, '""')}"`,
       payment.students?.mat_no || '',
       payment.students?.department || '',
       payment.students?.level || '',
       payment.amount,
       payment.session,
       payment.status,
-      payment.paid_at ? new Date(payment.paid_at).toISOString() : 'N/A'
+      payment.paid_at ? new Date(payment.paid_at).toISOString() : 'PENDING'
     ])
     
     // Create CSV string
@@ -29,18 +59,24 @@ export function ExportCSVButton({ data }: { data: any[] }) {
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = url
-    link.setAttribute('download', `nuesa-payments-${new Date().toISOString().split('T')[0]}.csv`)
+    link.setAttribute('download', `seees-dues-audit-${new Date().toISOString().split('T')[0]}.csv`)
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
+    URL.revokeObjectURL(url)
   }
 
   return (
-    <button 
+    <Button 
       onClick={handleExport}
-      className="bg-uniport-navy text-white px-4 py-2 rounded font-medium hover:bg-opacity-90 text-sm"
+      variant="secondary"
+      size="sm"
+      disabled={!data || data.length === 0}
+      className="gap-1.5 font-mono text-xs uppercase tracking-wider"
+      aria-label="Export payment ledger as CSV"
     >
-      Export to CSV
-    </button>
+      <Download size={14} aria-hidden="true" />
+      <span>Export Financial CSV</span>
+    </Button>
   )
 }

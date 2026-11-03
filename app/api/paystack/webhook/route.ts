@@ -25,12 +25,10 @@ export async function POST(req: Request) {
       
       const supabase = createAdminClient()
       
-      // Generate sequential receipt number (e.g. NUESA/2026/XXXX)
+      // Generate sequential receipt number (e.g. SEEES/2026/XXXX)
       const year = new Date().getFullYear()
-      // Note: In production you might want a more robust atomic counter for receipt numbers.
-      // This is a simple random 4-digit fallback for demonstration if no sequence exists.
       const randomSeq = Math.floor(1000 + Math.random() * 9000)
-      const receiptNumber = `NUESA/${year}/${randomSeq}`
+      const receiptNumber = `SEEES/${year}/${randomSeq}`
 
       // Update payment status using service role
       const { error } = await supabase

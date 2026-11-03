@@ -38,38 +38,35 @@ export function OnboardingForm({ completeProfileAction }: { completeProfileActio
       )}
       
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-        <input required type="text" name="full_name" className="w-full p-3 border border-gray-300 rounded focus:ring-uniport-blue" placeholder="John Doe" />
+        <label className="block text-sm font-medium text-blue-900 mb-1">Full Name</label>
+        <input required type="text" name="full_name" className="w-full p-3 border border-blue-900/20 rounded focus:ring-1 focus:ring-blue-900 focus:border-blue-900 outline-none" placeholder="John Doe" />
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Matriculation Number</label>
-          <input required type="text" name="mat_no" pattern="U20\d{2}/\d{7}" title="Format: U20XX/XXXXXXX" className="w-full p-3 border border-gray-300 rounded focus:ring-uniport-blue uppercase" placeholder="U2021/1234567" />
+          <label className="block text-sm font-medium text-blue-900 mb-1">Matriculation Number</label>
+          <input required type="text" name="mat_no" pattern="U20\d{2}/\d{7}" title="Format: U20XX/XXXXXXX" className="w-full p-3 border border-blue-900/20 rounded focus:ring-1 focus:ring-blue-900 focus:border-blue-900 outline-none uppercase font-mono" placeholder="U2021/1234567" />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
-          <input required type="tel" name="phone" className="w-full p-3 border border-gray-300 rounded focus:ring-uniport-blue" placeholder="08012345678" />
+          <label className="block text-sm font-medium text-blue-900 mb-1">Phone Number</label>
+          <input required type="tel" name="phone" className="w-full p-3 border border-blue-900/20 rounded focus:ring-1 focus:ring-blue-900 focus:border-blue-900 outline-none" placeholder="08012345678" />
         </div>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Department</label>
-          <select required name="department" className="w-full p-3 border border-gray-300 rounded focus:ring-uniport-blue bg-white">
-            <option value="">Select Department</option>
-            <option value="Chemical">Chemical Engineering</option>
-            <option value="Civil">Civil Engineering</option>
-            <option value="Electrical">Electrical/Electronic Engineering</option>
-            <option value="Mechanical">Mechanical Engineering</option>
-            <option value="Petroleum">Petroleum & Gas Engineering</option>
-            <option value="Mechatronics">Mechatronics Engineering</option>
-            <option value="Computer">Computer Engineering</option>
+          <label className="block text-sm font-medium text-blue-900 mb-1">Department / Option</label>
+          <select required name="department" defaultValue="Electrical & Electronic Engineering" className="w-full p-3 border border-blue-900/20 rounded focus:ring-1 focus:ring-blue-900 focus:border-blue-900 bg-white outline-none">
+            <option value="Electrical & Electronic Engineering">Electrical & Electronic Engineering</option>
+            <option value="Power Systems Option">Power Systems Option</option>
+            <option value="Telecommunications Option">Telecommunications Option</option>
+            <option value="Electronics & Embedded Systems Option">Electronics & Embedded Systems Option</option>
+            <option value="Control & Automation Option">Control & Automation Option</option>
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Level</label>
-          <select required name="level" className="w-full p-3 border border-gray-300 rounded focus:ring-uniport-blue bg-white">
+          <label className="block text-sm font-medium text-blue-900 mb-1">Level</label>
+          <select required name="level" className="w-full p-3 border border-blue-900/20 rounded focus:ring-1 focus:ring-blue-900 focus:border-blue-900 bg-white outline-none">
             <option value="">Select Level</option>
             <option value="100">100 Level</option>
             <option value="200">200 Level</option>
@@ -80,8 +77,8 @@ export function OnboardingForm({ completeProfileAction }: { completeProfileActio
         </div>
       </div>
       
-      <button type="submit" disabled={loading} className="w-full bg-[#0B1B3D] text-white font-bold py-3 px-4 rounded hover:bg-opacity-90 transition-all disabled:opacity-50">
-        {loading ? 'Saving Profile...' : 'Complete Profile'}
+      <button type="submit" disabled={loading} className="w-full bg-blue-900 text-white font-bold py-3.5 px-4 rounded-md hover:bg-blue-950 transition-all disabled:opacity-50 border border-red-600/30">
+        {loading ? 'Saving Profile...' : 'Complete SEEES Profile'}
       </button>
     </form>
   )

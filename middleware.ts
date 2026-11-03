@@ -31,9 +31,25 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser()
 
-  const isPortal = request.nextUrl.pathname.startsWith('/portal')
-  const isAdmin = request.nextUrl.pathname.startsWith('/admin')
-  const isOnboarding = request.nextUrl.pathname.startsWith('/portal/onboarding')
+  const pathname = request.nextUrl.pathname
+
+  // Compatibility routes for /checkout, /onboarding, /receipt
+  if (pathname === '/checkout') {
+    return NextResponse.redirect(new URL('/portal/dues', request.url))
+  }
+  if (pathname === '/onboarding' || pathname === '/portal/onboarding') {
+    return NextResponse.redirect(new URL('/signup', request.url))
+  }
+  if (pathname === '/receipt') {
+    return NextResponse.redirect(new URL('/portal/receipts', request.url))
+  }
+  if (pathname.startsWith('/receipt/')) {
+    const id = pathname.replace('/receipt/', '')
+    return NextResponse.redirect(new URL(`/portal/receipts/${id}`, request.url))
+  }
+
+  const isPortal = pathname.startsWith('/portal')
+  const isAdmin = pathname.startsWith('/admin')
 
   // Not logged in -> redirect to login (placeholder /login)
   if (!user && (isPortal || isAdmin)) {

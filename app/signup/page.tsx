@@ -4,15 +4,22 @@ import { useState } from 'react'
 import { signUpAndCreateStudent } from '@/app/auth/actions'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Check } from 'lucide-react'
+import { Check, ArrowLeft, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
 import { Input } from '@/components/ui/Input'
 import { Badge } from '@/components/ui/Badge'
 
 const DEPARTMENTS = [
-  'Chemical', 'Civil', 'Electrical', 'Mechanical', 'Petroleum', 'Mechatronics', 'Electronics'
+  'Chemical', 
+  'Civil', 
+  'Electrical', 
+  'Mechanical', 
+  'Petroleum', 
+  'Mechatronics', 
+  'Electronics'
 ]
+
 const MAT_NO_PATTERN = /^U20\d{2}\/\d{7}$/i
 const NIGERIAN_PHONE_PATTERN = /^(0)(7|8|9)(0|1)\d{8}$/
 
@@ -34,7 +41,6 @@ export default function SignupPage() {
 
   const matNoMatch = matNo === matNoConfirm && matNo !== ''
   const matNoValid = MAT_NO_PATTERN.test(matNo)
-  
   const step1Valid = matNoValid && matNoMatch
   
   const step2Valid = 
@@ -72,106 +78,169 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-sand flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex justify-center mb-6">
-          <Badge variant="neutral">NUESA PORTAL</Badge>
-        </div>
-        <h2 className="mt-2 text-center text-3xl font-serif font-bold text-primary mb-2">
-          {step === 1 ? 'Verify Matriculation' : step === 2 ? 'Personal Details' : 'Review & Confirm'}
-        </h2>
-        <p className="text-center text-primary/60 mb-8 font-medium">
-          {step === 1 ? 'Step 1 of 3' : step === 2 ? 'Step 2 of 3' : 'Final Step'}
-        </p>
-        
-        <div className="flex items-center gap-2 mb-8 justify-center">
-          {[1, 2, 3].map(s => (
-            <div key={s} className="flex items-center gap-2">
-              <div className={`w-6 h-6 border rounded-sm flex items-center justify-center font-mono text-xs ${
-                step === s ? 'bg-primary border-primary text-white' : 
-                step > s ? 'bg-success/10 border-success/30 text-success' : 'bg-transparent border-primary/20 text-primary/40'
-              }`}>
-                {step > s ? <Check size={12} /> : s}
-              </div>
-              {s < 3 && <div className={`w-8 h-px ${step > s ? 'bg-success/30' : 'bg-primary/20'}`}></div>}
-            </div>
-          ))}
-        </div>
+    <div className="min-h-screen bg-background flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      
+      {/* Return to website */}
+      <div className="sm:mx-auto sm:w-full sm:max-w-lg mb-6 text-center">
+        <Link 
+          href="/" 
+          className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-primary/60 hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-xs p-1"
+        >
+          <ArrowLeft size={14} aria-hidden="true" />
+          <span>Return to Homepage</span>
+        </Link>
       </div>
 
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <Card className="py-8 px-4 sm:px-10">
+      <div className="sm:mx-auto sm:w-full sm:max-w-lg text-center space-y-3">
+        <div className="w-10 h-10 bg-white border border-primary/20 rounded-xs flex items-center justify-center font-serif font-bold text-xs text-primary mx-auto shadow-xs">
+          FOE
+        </div>
+
+        <div>
+          <span className="font-mono text-xs uppercase tracking-widest text-primary/60 font-semibold block">
+            {step === 1 ? 'Step 1 of 3 &bull; Matriculation Verification' : step === 2 ? 'Step 2 of 3 &bull; Profile Particulars' : 'Step 3 of 3 &bull; Final Confirmation'}
+          </span>
+          <h1 className="font-serif text-2xl sm:text-3xl font-semibold text-primary tracking-tight mt-1">
+            {step === 1 ? 'Verify Matriculation' : step === 2 ? 'Student Academic Profile' : 'Review & Initialize Account'}
+          </h1>
+        </div>
+        
+        {/* Step Progress Tracker */}
+        <nav aria-label="Onboarding Progress" className="py-2">
+          <ol className="flex items-center justify-center gap-2">
+            {[1, 2, 3].map(s => (
+              <li key={s} className="flex items-center gap-2">
+                <div 
+                  className={`w-7 h-7 border rounded-2xs flex items-center justify-center font-mono text-xs font-semibold transition-colors ${
+                    step === s 
+                      ? 'bg-primary border-primary text-white' 
+                      : step > s 
+                        ? 'bg-emerald-50 border-emerald-600/40 text-emerald-800' 
+                        : 'bg-white border-primary/20 text-primary/40'
+                  }`}
+                  aria-current={step === s ? 'step' : undefined}
+                >
+                  {step > s ? <Check size={13} aria-hidden="true" /> : s}
+                </div>
+                {s < 3 && (
+                  <div className={`w-8 sm:w-12 h-px ${step > s ? 'bg-emerald-600/50' : 'bg-primary/20'}`} aria-hidden="true" />
+                )}
+              </li>
+            ))}
+          </ol>
+        </nav>
+      </div>
+
+      <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-lg">
+        <Card variant="default" className="py-8 px-6 sm:px-10 space-y-6">
           
           {error && (
-            <div className="bg-red-50 border border-red-500/20 p-4 mb-6 rounded-sm">
-              <p className="text-sm text-red-700 font-medium">{error}</p>
+            <div 
+              role="alert" 
+              className="bg-red-50 border border-red-500/25 p-3.5 rounded-2xs flex items-start gap-2.5 text-xs text-red-700 font-sans leading-relaxed"
+            >
+              <AlertCircle size={16} className="text-red-600 shrink-0 mt-0.5" aria-hidden="true" />
+              <span>{error}</span>
             </div>
           )}
 
+          {/* STEP 1: MATRICULATION VERIFICATION */}
           {step === 1 && (
-            <div className="space-y-6">
+            <div className="space-y-5">
+              <p className="font-sans text-xs text-primary/70 leading-relaxed">
+                Enter your authentic University of Port Harcourt matriculation number to bind your clearance identity.
+              </p>
+
               <Input
                 label="Matriculation Number"
                 type="text"
+                id="mat-no"
                 value={matNo}
                 onChange={e => setMatNo(e.target.value.toUpperCase())}
-                placeholder="U2021/1234567"
-                className="uppercase font-mono"
-                error={!matNoValid && matNo.length > 0 ? 'Must match pattern U20XX/XXXXXXX' : undefined}
+                placeholder="e.g. U2021/5570012"
+                className="uppercase font-mono tracking-wider font-semibold"
+                error={!matNoValid && matNo.length > 0 ? 'Format must adhere to U20XX/XXXXXXX' : undefined}
+                helperText="Must match standard UniPort engineering format (e.g. U2021/5570012)"
               />
 
               <Input
-                label="Re-enter matric number to confirm"
+                label="Confirm Matriculation Number"
                 type="text"
+                id="mat-no-confirm"
                 value={matNoConfirm}
                 onChange={e => setMatNoConfirm(e.target.value.toUpperCase())}
                 onPaste={e => e.preventDefault()}
-                placeholder="U2021/1234567"
-                className="uppercase font-mono"
-                error={matNoConfirm && !matNoMatch ? 'Matric numbers do not match.' : undefined}
+                placeholder="Re-enter to verify"
+                className="uppercase font-mono tracking-wider font-semibold"
+                error={matNoConfirm && !matNoMatch ? 'Matriculation numbers do not match exactly.' : undefined}
+                helperText="Paste disabled to guarantee verification accuracy"
               />
 
-              <Button onClick={handleNextStep} variant="primary" fullWidth disabled={!step1Valid}>
-                Continue
-              </Button>
-              <div className="pt-4 border-t border-primary/10 mt-6">
-                <Link href="/login" className="text-sm text-primary hover:text-accent font-medium">
-                  Already registered? Log in here.
+              <div className="pt-2">
+                <Button 
+                  onClick={handleNextStep} 
+                  variant="primary" 
+                  fullWidth 
+                  size="md"
+                  disabled={!step1Valid}
+                  className="gap-2 font-sans font-semibold"
+                >
+                  <span>Verify & Proceed</span>
+                  <ArrowRight size={15} aria-hidden="true" />
+                </Button>
+              </div>
+
+              <div className="pt-4 border-t border-primary/10 text-center">
+                <Link href="/login" className="font-mono text-xs uppercase font-bold text-primary/70 hover:text-accent transition-colors">
+                  Already registered? Sign In Here &rarr;
                 </Link>
               </div>
             </div>
           )}
 
+          {/* STEP 2: PERSONAL & DEPARTMENTAL PROFILE */}
           {step === 2 && (
             <div className="space-y-4">
               <Input
-                label="Full Name"
+                label="Official Full Name (Surname First)"
                 type="text"
+                id="full-name"
                 value={fullName}
                 onChange={e => setFullName(e.target.value)}
+                placeholder="e.g. OKONKWO, Emeka David"
+                required
               />
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-primary mb-1">Department</label>
+                  <label htmlFor="dept-select" className="block text-xs font-semibold uppercase tracking-wider text-primary/80 mb-1.5">
+                    Department
+                  </label>
                   <select 
+                    id="dept-select"
                     value={department} 
                     onChange={e => setDepartment(e.target.value)} 
-                    className="block w-full px-3 py-2 border border-primary/20 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
+                    className="block w-full px-3 py-2.5 text-xs font-sans min-h-[44px] border border-primary/20 rounded-xs bg-white text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    required
                   >
-                    <option value="">Select...</option>
-                    {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
+                    <option value="">Select Department...</option>
+                    {DEPARTMENTS.map(d => <option key={d} value={d}>{d} Eng.</option>)}
                   </select>
                 </div>
+
                 <div>
-                  <label className="block text-sm font-medium text-primary mb-1">Level</label>
+                  <label htmlFor="level-select" className="block text-xs font-semibold uppercase tracking-wider text-primary/80 mb-1.5">
+                    Level
+                  </label>
                   <select 
+                    id="level-select"
                     value={level} 
                     onChange={e => setLevel(e.target.value)} 
-                    className="block w-full px-3 py-2 border border-primary/20 rounded-md bg-white focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
+                    className="block w-full px-3 py-2.5 text-xs font-sans min-h-[44px] border border-primary/20 rounded-xs bg-white text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                    required
                   >
-                    <option value="">Select...</option>
-                    {['100', '200', '300', '400', '500'].map(l => <option key={l} value={l}>{l}L</option>)}
+                    <option value="">Select Level...</option>
+                    {['100', '200', '300', '400', '500'].map(l => <option key={l} value={l}>{l} Level</option>)}
                   </select>
                 </div>
               </div>
@@ -179,62 +248,96 @@ export default function SignupPage() {
               <Input
                 label="Email Address"
                 type="email"
+                id="signup-email"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
+                placeholder="student@example.com"
+                required
               />
 
               <Input
-                label="Phone Number"
+                label="Active Phone Number (WhatsApp Enabled)"
                 type="tel"
+                id="signup-phone"
                 value={phone}
                 onChange={e => setPhone(e.target.value)}
                 placeholder="08012345678"
+                error={phone.length > 0 && !NIGERIAN_PHONE_PATTERN.test(phone) ? 'Enter valid Nigerian phone (e.g. 080...)' : undefined}
+                required
               />
 
               <Input
-                label="Create Password"
+                label="Create Portal Password (Min. 6 Characters)"
                 type="password"
+                id="signup-password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
-                placeholder="Min. 6 characters"
-                error={password.length > 0 && password.length < 6 ? 'Password must be at least 6 characters' : undefined}
+                placeholder="Min. 6 alphanumeric characters"
+                error={password.length > 0 && password.length < 6 ? 'Password must contain at least 6 characters.' : undefined}
+                required
               />
 
-              <div className="flex gap-4 pt-4">
-                <Button onClick={() => setStep(1)} variant="secondary" className="flex-1">Back</Button>
-                <Button onClick={handleNextStep} variant="primary" className="flex-[2]" disabled={!step2Valid}>
-                  Review Details
+              <div className="flex gap-3 pt-3">
+                <Button onClick={() => setStep(1)} variant="secondary" size="md" className="flex-1">
+                  Back
+                </Button>
+                <Button onClick={handleNextStep} variant="primary" size="md" className="flex-[2]" disabled={!step2Valid}>
+                  Review Particulars
                 </Button>
               </div>
             </div>
           )}
 
+          {/* STEP 3: REVIEW & CONFIRM */}
           {step === 3 && (
             <div className="space-y-6">
-              <div className="bg-yellow-50 border border-gold/40 p-5 rounded-md">
-                <p className="text-xs text-yellow-800 font-bold uppercase tracking-wider mb-2">Confirm this is you</p>
-                <p className="text-2xl font-serif font-semibold text-primary">{fullName}</p>
-                <p className="text-lg font-mono text-primary/80 mt-1">{matNo}</p>
-                <div className="mt-4 flex gap-2">
-                  <Badge variant="neutral">{department} Eng.</Badge>
-                  <Badge variant="neutral">{level}L</Badge>
+              <div className="bg-primary/[0.02] border border-primary/15 p-5 rounded-xs space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-primary/10">
+                  <span className="font-mono text-xs uppercase tracking-wider text-primary/60 font-semibold">
+                    Review Identity Card
+                  </span>
+                  <Badge variant="gold">Unverified</Badge>
                 </div>
-                <div className="mt-4 pt-4 border-t border-gold/20">
-                  <p className="text-sm font-medium text-primary/80">Email: {email}</p>
-                  <p className="text-sm font-medium text-primary/80">Phone: {phone}</p>
+
+                <div className="space-y-1">
+                  <span className="font-mono text-[10px] uppercase text-primary/50 block">Student Name</span>
+                  <p className="font-serif text-lg font-bold text-primary">{fullName}</p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4 text-xs font-sans">
+                  <div>
+                    <span className="font-mono text-[10px] uppercase text-primary/50 block">Matric No.</span>
+                    <span className="font-mono font-bold text-primary">{matNo}</span>
+                  </div>
+                  <div>
+                    <span className="font-mono text-[10px] uppercase text-primary/50 block">Cadre</span>
+                    <span className="font-semibold text-primary">{department} Eng. ({level}L)</span>
+                  </div>
+                  <div>
+                    <span className="font-mono text-[10px] uppercase text-primary/50 block">Email Address</span>
+                    <span className="text-primary/80 break-all">{email}</span>
+                  </div>
+                  <div>
+                    <span className="font-mono text-[10px] uppercase text-primary/50 block">Phone</span>
+                    <span className="font-mono text-primary/80">{phone}</span>
+                  </div>
                 </div>
               </div>
 
-              <div className="flex gap-4">
-                <Button onClick={() => setStep(2)} variant="secondary" className="flex-1" disabled={loading}>Edit</Button>
-                <Button onClick={handleSignup} variant="primary" className="flex-[2]" disabled={loading}>
-                  {loading ? 'Creating Account...' : 'Confirm & Complete'}
+              <div className="flex gap-3">
+                <Button onClick={() => setStep(2)} variant="secondary" size="md" className="flex-1" disabled={loading}>
+                  Edit Details
+                </Button>
+                <Button onClick={handleSignup} variant="primary" size="md" className="flex-[2]" isLoading={loading} disabled={loading}>
+                  Confirm & Create Profile
                 </Button>
               </div>
             </div>
           )}
+
         </Card>
       </div>
+
     </div>
   )
 }

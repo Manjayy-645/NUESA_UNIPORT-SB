@@ -1,8 +1,13 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
-import { User } from 'lucide-react'
+import { User, Users, GraduationCap, Award, ChevronRight } from 'lucide-react'
 import { Card } from '@/components/ui/Card'
 import { Badge } from '@/components/ui/Badge'
+
+export const metadata = {
+  title: 'Official Directory | SEEES UniPort',
+  description: 'Official directory of Principal Officers, Heads of Department, and Student Leaders of the Department of Electrical & Electronic Engineering, University of Port Harcourt.',
+}
 
 export default async function DirectoryPage({
   searchParams,
@@ -32,105 +37,154 @@ export default async function DirectoryPage({
     .eq('tenure_status', tenure)
     .order('display_order', { ascending: true })
 
+  const tabs = [
+    { id: 'faculty', label: 'Department & Faculty', countDesc: 'HOD & Academic Staff' },
+    { id: 'university', label: 'Principal Officers', countDesc: 'University Leadership' },
+    { id: 'student', label: 'Student Leaders', countDesc: 'SEEES Executives' },
+  ]
+
   return (
     <div className="bg-background min-h-screen">
-      {/* Page Header */}
-      <div className="bg-white py-16 border-b border-primary/20">
+      
+      {/* Editorial Page Header */}
+      <section className="bg-white py-16 border-b border-primary/15">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="mb-4">Official Directory</h1>
-          <p className="text-primary/70 max-w-2xl text-lg">
-            Browse through the leadership, administrative staff, and student executives of the Faculty of Engineering, University of Port Harcourt.
-          </p>
+          <div className="max-w-3xl space-y-3">
+            <div className="inline-flex items-center gap-2">
+              <Users size={16} className="text-accent" aria-hidden="true" />
+              <span className="font-mono text-xs uppercase tracking-widest text-primary/60 font-semibold">
+                Departmental Governance
+              </span>
+            </div>
+            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-semibold text-primary tracking-tight">
+              Official Leadership Directory
+            </h1>
+            <p className="font-sans text-sm sm:text-base text-primary/75 leading-relaxed">
+              Explore the academic administration, departmental leadership, and student executive councils stewarding the Department of Electrical &amp; Electronic Engineering.
+            </p>
+          </div>
         </div>
-      </div>
+      </section>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Filters */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10 pb-6 border-b border-primary/10">
-          <div className="flex w-full md:w-auto overflow-x-auto snap-x scrollbar-hide gap-2 pb-2 md:pb-0">
-            <Link 
-              href={`/directory?tab=faculty&tenure=${tenure}`}
-              className={`px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap snap-start transition-colors border min-h-[44px] flex items-center justify-center ${activeTab === 'faculty' ? 'bg-primary text-white border-primary' : 'bg-transparent text-primary hover:bg-primary/5 border-primary/20'}`}
-            >
-              Faculty & Departments
-            </Link>
-            <Link 
-              href={`/directory?tab=university&tenure=${tenure}`}
-              className={`px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap snap-start transition-colors border min-h-[44px] flex items-center justify-center ${activeTab === 'university' ? 'bg-primary text-white border-primary' : 'bg-transparent text-primary hover:bg-primary/5 border-primary/20'}`}
-            >
-              Principal Officers
-            </Link>
-            <Link 
-              href={`/directory?tab=student&tenure=${tenure}`}
-              className={`px-4 py-2 text-sm font-medium rounded-md whitespace-nowrap snap-start transition-colors border min-h-[44px] flex items-center justify-center ${activeTab === 'student' ? 'bg-primary text-white border-primary' : 'bg-transparent text-primary hover:bg-primary/5 border-primary/20'}`}
-            >
-              Student Leaders
-            </Link>
-          </div>
+        
+        {/* Asymmetrical Filter Toolbar */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-10 pb-6 border-b border-primary/10">
           
-          <div className="flex gap-2 w-full md:w-auto border border-primary/20 p-1 rounded-md">
+          {/* Main Category Tabs */}
+          <nav aria-label="Directory Categories" className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide w-full md:w-auto">
+            {tabs.map((tab) => {
+              const isActive = activeTab === tab.id
+              return (
+                <Link
+                  key={tab.id}
+                  href={`/directory?tab=${tab.id}&tenure=${tenure}`}
+                  className={`px-4 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-xs border transition-colors whitespace-nowrap min-h-[44px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                    isActive
+                      ? 'bg-primary text-white border-primary'
+                      : 'bg-white text-primary/75 border-primary/20 hover:text-primary hover:border-primary/40'
+                  }`}
+                  aria-current={isActive ? 'page' : undefined}
+                >
+                  {tab.label}
+                </Link>
+              )
+            })}
+          </nav>
+          
+          {/* Tenure Switcher (Current vs Past) */}
+          <div className="flex items-center gap-1 bg-white border border-primary/20 p-1 rounded-xs w-full sm:w-auto">
             <Link 
               href={`/directory?tab=${activeTab}&tenure=current`}
-              className={`px-4 py-1.5 text-sm font-medium rounded-sm flex-1 text-center min-h-[44px] flex items-center justify-center transition-colors ${tenure === 'current' ? 'bg-accent text-white' : 'text-primary/70 hover:text-primary'}`}
+              className={`px-4 py-1.5 text-xs font-mono uppercase tracking-wider font-semibold rounded-2xs flex-1 sm:flex-initial text-center min-h-[36px] flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                tenure === 'current' 
+                  ? 'bg-accent text-white' 
+                  : 'text-primary/70 hover:text-primary'
+              }`}
             >
-              Current
+              Current Tenure
             </Link>
             <Link 
               href={`/directory?tab=${activeTab}&tenure=past`}
-              className={`px-4 py-1.5 text-sm font-medium rounded-sm flex-1 text-center min-h-[44px] flex items-center justify-center transition-colors ${tenure === 'past' ? 'bg-accent text-white' : 'text-primary/70 hover:text-primary'}`}
+              className={`px-4 py-1.5 text-xs font-mono uppercase tracking-wider font-semibold rounded-2xs flex-1 sm:flex-initial text-center min-h-[36px] flex items-center justify-center transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+                tenure === 'past' 
+                  ? 'bg-accent text-white' 
+                  : 'text-primary/70 hover:text-primary'
+              }`}
             >
-              Past
+              Past Leadership
             </Link>
           </div>
+
         </div>
 
         {/* Directory Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {people?.map((person) => (
-            <Card key={person.id} className="w-full overflow-hidden flex flex-col group">
-              <div className="h-56 bg-primary/5 flex items-center justify-center relative border-b border-primary/10">
+            <Card key={person.id} variant="default" className="overflow-hidden flex flex-col group h-full">
+              
+              {/* Photo or Monogram Placeholder */}
+              <div className="h-60 bg-primary/5 flex items-center justify-center relative border-b border-primary/10 overflow-hidden">
                 {person.photo_url ? (
-                  <img src={person.photo_url} alt={person.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300" />
+                  <img 
+                    src={person.photo_url} 
+                    alt={person.name} 
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                  />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-primary/20">
-                    <User size={64} strokeWidth={1} />
+                  <div className="w-full h-full flex flex-col items-center justify-center bg-primary/[0.03] text-primary/25">
+                    <User size={48} strokeWidth={1.5} />
+                    <span className="font-mono text-[10px] uppercase tracking-widest mt-2">UniPort FOE</span>
                   </div>
                 )}
                 {person.start_year && (
                   <div className="absolute top-3 right-3">
-                    <Badge variant="gold" className="font-mono">
-                      {person.start_year} - {person.end_year || 'Present'}
+                    <Badge variant="gold">
+                      {person.start_year} &ndash; {person.end_year || 'Present'}
                     </Badge>
                   </div>
                 )}
               </div>
-              <div className="p-5 flex-1 flex flex-col items-start">
-                <h3 className="font-serif text-lg leading-tight mb-1 text-primary">{person.name}</h3>
-                <p className="text-accent text-sm font-medium mb-3">{person.rank_or_position}</p>
+
+              {/* Profile Details */}
+              <div className="p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 className="font-serif text-base font-semibold leading-snug mb-1 text-primary group-hover:text-accent transition-colors">
+                    {person.name}
+                  </h3>
+                  <p className="font-sans text-xs font-semibold text-accent uppercase tracking-wide mb-3">
+                    {person.rank_or_position}
+                  </p>
+                </div>
                 
-                {person.department && (
-                  <Badge variant="neutral" className="mt-auto mb-2">
-                    {person.department} Eng.
-                  </Badge>
-                )}
-                
-                {person.sub_association && (
-                  <span className="text-primary/50 text-xs font-medium uppercase tracking-wider">{person.sub_association}</span>
-                )}
+                <div className="pt-3 border-t border-primary/10 mt-auto flex flex-col gap-1.5">
+                  {person.department && (
+                    <Badge variant="neutral" className="self-start">
+                      {person.department} Engineering
+                    </Badge>
+                  )}
+                  {person.sub_association && (
+                    <span className="text-primary/50 font-mono text-[10px] uppercase tracking-wider block">
+                      {person.sub_association}
+                    </span>
+                  )}
+                </div>
               </div>
+
             </Card>
           ))}
         </div>
         
         {(!people || people.length === 0) && (
-          <Card className="text-center py-20 border-dashed border-primary/20">
-            <div className="w-16 h-16 bg-primary/5 text-primary/40 rounded-full flex items-center justify-center mx-auto mb-4 border border-primary/10">
-              <User size={32} />
+          <div className="text-center py-20 border border-dashed border-primary/20 rounded-xs bg-white p-8">
+            <div className="w-12 h-12 bg-primary/5 text-primary/40 rounded-xs flex items-center justify-center mx-auto mb-3 border border-primary/10">
+              <Users size={24} />
             </div>
-            <h3 className="text-lg font-serif text-primary mb-1">No profiles found</h3>
-            <p className="text-primary/60 text-sm font-sans">There are currently no records for this category.</p>
-          </Card>
+            <h3 className="font-serif text-lg font-semibold text-primary mb-1">No profiles found</h3>
+            <p className="font-sans text-xs text-primary/60">There are currently no active directory records listed for this filter.</p>
+          </div>
         )}
+
       </div>
     </div>
   )

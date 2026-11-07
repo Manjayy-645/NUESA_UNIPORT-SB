@@ -6,8 +6,8 @@ import { Button } from '@/components/ui/Button'
 import { CreditCard, Search, Filter, ArrowUpDown } from 'lucide-react'
 
 export const metadata = {
-  title: 'Payment Audits | SEEES Back-Office',
-  description: 'Audit SEEES departmental dues payments, reconcile transaction receipts, and export CSV financial ledgers.',
+  title: 'Payment Audits | EEE Back-Office',
+  description: 'Audit departmental dues payments, reconcile transaction receipts, and export CSV financial ledgers.',
 }
 
 export default async function AdminPaymentsPage({
@@ -59,8 +59,8 @@ export default async function AdminPaymentsPage({
               Treasury & Audit Operations
             </span>
           </div>
-          <h1 className="font-serif text-3xl font-bold text-primary tracking-tight">
-            SEEES Departmental Dues Audit
+          <h1 className="text-3xl font-extrabold text-[#0A192F] tracking-tight">
+            Departmental Dues Audit
           </h1>
           <p className="font-sans text-xs sm:text-sm text-primary/70 mt-1">
             Reconcile Paystack collections, verify bank settlements, and export accounting ledgers.

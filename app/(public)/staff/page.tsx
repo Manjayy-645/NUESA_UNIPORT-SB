@@ -153,7 +153,7 @@ const STAFF_DATA: StaffMember[] = [
     focusArea: 'electronics',
     email: 'kingsley.nwosu@uniport.edu.ng',
     office: 'Embedded Systems Lab, Rm 105',
-    biography: 'Faculty advisor to SEEES student robotics and hardware development club, with active patents in hardware cryptography.'
+    biography: 'Faculty advisor to departmental student robotics and hardware development hub, with active patents in hardware cryptography.'
   },
   {
     id: 'staff-8',
@@ -470,27 +470,27 @@ export default async function StaffPage({
         )}
 
         {/* Academic Consultation CTA */}
-        <div className="mt-16 bg-seees-navy text-white rounded-xl p-8 sm:p-10 border-2 border-seees-gold/40 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="mt-16 bg-[#0A192F] text-white rounded-2xl p-8 sm:p-10 border border-blue-900/40 shadow-card relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="max-w-2xl relative z-10">
-            <span className="bg-seees-gold text-seees-navy text-xs font-bold px-3 py-1 rounded-sm uppercase tracking-wider inline-block mb-3">
+            <span className="bg-amber-500 text-slate-950 text-xs font-bold px-3 py-1 rounded-md uppercase tracking-wider inline-block mb-3">
               Academic Advising &amp; Research
             </span>
-            <h2 className="text-2xl sm:text-3xl text-white font-serif font-bold mb-2">
+            <h2 className="text-2xl sm:text-3xl text-white font-extrabold mb-2 tracking-tight">
               Connect With Academic Advisors
             </h2>
-            <p className="text-gray-300 text-sm font-sans leading-relaxed">
+            <p className="text-slate-300 text-sm font-sans leading-relaxed">
               Undergraduate and postgraduate students can book laboratory consultations, final-year project supervision, 
               or academic guidance directly with departmental staff advisors during scheduled office hours.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto shrink-0 relative z-10">
             <Link href="/programmes" className="w-full sm:w-auto">
-              <Button variant="gold" fullWidth>
+              <Button variant="gold" fullWidth className="font-bold">
                 View Programmes
               </Button>
             </Link>
             <Link href="/documents" className="w-full sm:w-auto">
-              <Button variant="secondary" className="!text-white !border-white/30 hover:!bg-white/10" fullWidth>
+              <Button variant="primary" fullWidth className="font-bold">
                 Timetables Hub
               </Button>
             </Link>

@@ -33,8 +33,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ reference: existingPayment.paystack_reference })
     }
     
-    // Generate unique reference with SEEES prefix
-    const reference = `SEEES-${Date.now()}-${Math.floor(Math.random() * 1000000)}`
+    // Generate unique reference with EEE prefix
+    const reference = `EEE-${Date.now()}-${Math.floor(Math.random() * 1000000)}`
     
     const { error } = await adminSupabase
       .from('payments')

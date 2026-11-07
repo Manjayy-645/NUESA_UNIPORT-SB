@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/Badge'
 import { Calendar, Image as ImageIcon } from 'lucide-react'
 
 export const metadata = {
-  title: 'Manage Activities | SEEES Back-Office',
+  title: 'Manage Activities | EEE Back-Office',
   description: 'Publish and manage departmental events, seminars, and technical workshops.',
 }
 

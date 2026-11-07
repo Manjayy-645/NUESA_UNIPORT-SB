@@ -1,28 +1,27 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Fraunces, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google'
+import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google'
 
-const fraunces = Fraunces({ 
+const plusJakartaSans = Plus_Jakarta_Sans({ 
   subsets: ['latin'],
-  variable: '--font-fraunces',
-  weight: ['400', '600']
+  variable: '--font-sans',
+  weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
 })
 
-const ibmPlexSans = IBM_Plex_Sans({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
-  variable: '--font-ibm-sans',
-  weight: ['400', '500']
-})
-
-const ibmPlexMono = IBM_Plex_Mono({
-  subsets: ['latin'],
-  variable: '--font-ibm-mono',
-  weight: ['400', '500']
+  variable: '--font-mono',
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'SEEES UniPort | Society of Electrical and Electronic Engineering Students',
-  description: 'Official digital portal for the Society of Electrical and Electronic Engineering Students (SEEES), Department of Electrical & Electronic Engineering, University of Port Harcourt.',
+  title: 'Department of Electrical & Electronics Engineering | University of Port Harcourt',
+  description: 'Official digital portal for the Department of Electrical & Electronics Engineering, Faculty of Engineering, University of Port Harcourt (UniPort).',
+  icons: {
+    icon: '/eee-logo.svg',
+  },
 }
 
 export default function RootLayout({
@@ -31,8 +30,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}>
-      <body className="bg-background text-primary font-sans antialiased selection:bg-accent/30 selection:text-primary">
+    <html lang="en" className={`${plusJakartaSans.variable} ${jetbrainsMono.variable}`}>
+      <body className="bg-slate-50 text-slate-900 font-sans antialiased selection:bg-blue-600/20 selection:text-blue-900 min-h-screen">
         {children}
       </body>
     </html>

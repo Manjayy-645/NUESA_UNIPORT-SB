@@ -6,15 +6,15 @@ export default function PortalLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="min-h-screen bg-background flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
       <PortalNavigation />
       <main className="flex-1">
         {children}
       </main>
       
-      <footer className="bg-white border-t border-blue-900/10 py-6 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-blue-900/60 font-mono">
-          &copy; {new Date().getFullYear()} Society of Electrical and Electronic Engineering Students (SEEES), UniPort Chapter &bull; Department of Electrical &amp; Electronic Engineering.
+      <footer className="bg-white border-t border-slate-200 py-6 mt-auto">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-500 font-mono font-medium">
+          &copy; {new Date().getFullYear()} Department of Electrical &amp; Electronics Engineering &bull; Faculty of Engineering, University of Port Harcourt.
         </div>
       </footer>
     </div>

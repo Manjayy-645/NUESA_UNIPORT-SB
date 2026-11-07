@@ -1,47 +1,55 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160">
   <defs>
-    <linearGradient id="seeesBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0A193F" />
-      <stop offset="100%" stop-color="#0B2564" />
+    <linearGradient id="eeeBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0A192F" />
+      <stop offset="50%" stop-color="#0F284E" />
+      <stop offset="100%" stop-color="#060E1E" />
     </linearGradient>
-    <linearGradient id="seeesGold" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#FACC15" />
-      <stop offset="100%" stop-color="#F59E0B" />
+    <linearGradient id="eeeGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE047" />
+      <stop offset="60%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#D97706" />
     </linearGradient>
-    <linearGradient id="electricGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#60A5FA" />
-      <stop offset="100%" stop-color="#1D4ED8" />
+    <linearGradient id="electricBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#2563EB" />
     </linearGradient>
     <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
       <feComposite in="SourceGraphic" in2="blur" operator="over" />
     </filter>
   </defs>
 
   <!-- Outer Crest Shield / Circle -->
-  <circle cx="80" cy="80" r="76" fill="url(#seeesBg)" stroke="url(#seeesGold)" stroke-width="4" />
-  <circle cx="80" cy="80" r="70" fill="none" stroke="#1D4ED8" stroke-width="1.5" stroke-dasharray="4,2" />
+  <circle cx="80" cy="80" r="76" fill="url(#eeeBg)" stroke="url(#eeeGold)" stroke-width="4" />
+  <circle cx="80" cy="80" r="69" fill="none" stroke="#2563EB" stroke-width="1.5" stroke-dasharray="4,2.5" opacity="0.8" />
 
   <!-- Circuit Ring Nodes -->
-  <circle cx="80" cy="14" r="3" fill="#FACC15" />
-  <circle cx="146" cy="80" r="3" fill="#FACC15" />
-  <circle cx="80" cy="146" r="3" fill="#FACC15" />
-  <circle cx="14" cy="80" r="3" fill="#FACC15" />
+  <circle cx="80" cy="14" r="3.5" fill="#F59E0B" />
+  <circle cx="146" cy="80" r="3.5" fill="#F59E0B" />
+  <circle cx="80" cy="146" r="3.5" fill="#F59E0B" />
+  <circle cx="14" cy="80" r="3.5" fill="#F59E0B" />
 
-  <!-- Circuit Traces -->
-  <path d="M 38 48 L 52 48 L 62 62 L 72 62" fill="none" stroke="url(#electricGlow)" stroke-width="2.5" stroke-linecap="round" />
-  <circle cx="38" cy="48" r="2.5" fill="#60A5FA" />
+  <!-- Integrated Circuit Traces (Left & Right) -->
+  <path d="M 32 46 L 48 46 L 60 60 L 72 60" fill="none" stroke="url(#electricBlue)" stroke-width="2.5" stroke-linecap="round" />
+  <circle cx="32" cy="46" r="3" fill="#38BDF8" />
+  <circle cx="48" cy="46" r="2" fill="#93C5FD" />
 
-  <path d="M 122 48 L 108 48 L 98 62 L 88 62" fill="none" stroke="url(#electricGlow)" stroke-width="2.5" stroke-linecap="round" />
-  <circle cx="122" cy="48" r="2.5" fill="#60A5FA" />
+  <path d="M 128 46 L 112 46 L 100 60 L 88 60" fill="none" stroke="url(#electricBlue)" stroke-width="2.5" stroke-linecap="round" />
+  <circle cx="128" cy="46" r="3" fill="#38BDF8" />
+  <circle cx="112" cy="46" r="2" fill="#93C5FD" />
 
-  <!-- Central High-Voltage Lightning Bolt / Energy Core -->
-  <polygon points="86,30 60,78 78,78 72,126 102,70 82,70" fill="url(#seeesGold)" filter="url(#glow)" />
+  <!-- Concentric EM Field Waveforms -->
+  <path d="M 40 80 A 40 40 0 0 1 120 80" fill="none" stroke="#38BDF8" stroke-width="1" stroke-dasharray="2,3" opacity="0.6" />
+  <path d="M 48 80 A 32 32 0 0 1 112 80" fill="none" stroke="#F59E0B" stroke-width="1" stroke-dasharray="2,2" opacity="0.5" />
 
-  <!-- Resistor / Inductor Wave Emblem -->
-  <path d="M 36 112 L 48 112 L 53 105 L 59 119 L 65 105 L 71 119 L 76 112 L 88 112" fill="none" stroke="#FACC15" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+  <!-- Central High-Voltage Core / Energy Lightning Bolt -->
+  <polygon points="85,28 58,74 76,74 70,118 102,66 84,66" fill="url(#eeeGold)" filter="url(#glow)" />
 
-  <!-- SEEES Text Banner -->
-  <rect x="35" y="124" width="90" height="20" rx="4" fill="#0A193F" stroke="#F59E0B" stroke-width="1.5" />
-  <text x="80" y="138" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="900" fill="#FACC15" text-anchor="middle" letter-spacing="2">SEEES</text>
+  <!-- Oscilloscope Sine Waveform -->
+  <path d="M 32 106 Q 44 96 56 106 T 80 106 T 104 106 T 128 106" fill="none" stroke="#38BDF8" stroke-width="1.8" stroke-linecap="round" opacity="0.75" />
+
+  <!-- Departmental Seal Text Banner -->
+  <rect x="24" y="122" width="112" height="22" rx="4" fill="#0A192F" stroke="url(#eeeGold)" stroke-width="1.5" />
+  <text x="80" y="137" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="900" fill="#FDE047" text-anchor="middle" letter-spacing="1.5">EEE • UNIPORT</text>
 </svg>

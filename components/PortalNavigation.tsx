@@ -25,22 +25,25 @@ export function PortalNavigation() {
   }
 
   return (
-    <header role="banner" className="bg-primary text-white border-b border-white/10 sticky top-0 z-40">
+    <header role="banner" className="bg-[#0A192F] text-white border-b border-blue-900/40 sticky top-0 z-40 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-18">
           
           {/* Institutional Monogram & Identity */}
           <div className="flex items-center gap-6">
-            <Link href="/portal" className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 rounded-xs p-1">
-              <div className="w-8 h-8 bg-white text-blue-900 rounded-xs flex items-center justify-center font-serif font-black text-xs shadow-xs border border-red-600/30">
-                SE
+            <Link 
+              href="/portal" 
+              className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg p-1"
+            >
+              <div className="w-9 h-9 bg-blue-600 text-white rounded-lg flex items-center justify-center font-black text-xs shadow-xs border border-blue-400/30">
+                EEE
               </div>
               <div>
-                <span className="font-serif font-bold text-base tracking-tight block text-white group-hover:text-red-400 transition-colors leading-tight">
-                  SEEES Portal
+                <span className="font-extrabold text-base tracking-tight block text-white group-hover:text-blue-400 transition-colors leading-tight">
+                  EEE Department Portal
                 </span>
-                <span className="text-[10px] text-white/70 font-mono tracking-wider uppercase block">
-                  Elect &amp; Electronic Eng.
+                <span className="text-[11px] text-slate-300 font-bold uppercase tracking-wider block">
+                  Electrical &amp; Electronics &bull; UniPort
                 </span>
               </div>
             </Link>
@@ -54,14 +57,14 @@ export function PortalNavigation() {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className={`inline-flex items-center gap-2 px-3 py-1.5 text-xs font-semibold uppercase tracking-wider rounded-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-600 ${
+                    className={`inline-flex items-center gap-2 px-3.5 py-2 text-xs font-bold uppercase tracking-wider rounded-lg transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
                       isActive
-                        ? 'bg-red-600 text-white font-bold'
-                        : 'text-white/80 hover:text-white hover:bg-white/10'
+                        ? 'bg-blue-600 text-white font-extrabold shadow-xs shadow-blue-500/20'
+                        : 'text-slate-300 hover:text-white hover:bg-white/10'
                     }`}
                     aria-current={isActive ? 'page' : undefined}
                   >
-                    <Icon size={15} aria-hidden="true" />
+                    <Icon size={16} aria-hidden="true" />
                     <span>{item.name}</span>
                   </Link>
                 )
@@ -73,7 +76,7 @@ export function PortalNavigation() {
           <div className="hidden md:flex items-center gap-4">
             <Link 
               href="/" 
-              className="text-white/70 hover:text-white text-xs font-mono uppercase tracking-wider flex items-center gap-1.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-xs p-1"
+              className="text-slate-300 hover:text-white text-xs font-mono uppercase tracking-wider font-bold flex items-center gap-1.5 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg p-1.5 hover:bg-white/5"
             >
               <ArrowLeft size={14} aria-hidden="true" />
               <span>Main Website</span>
@@ -82,7 +85,7 @@ export function PortalNavigation() {
               onClick={handleSignOut} 
               variant="secondary" 
               size="sm"
-              className="!border-white/20 !text-white hover:!bg-white/10 gap-1.5 text-xs font-mono uppercase tracking-wider"
+              className="!border-white/20 !text-white !bg-white/5 hover:!bg-white/15 gap-1.5 text-xs font-mono uppercase tracking-wider font-bold"
             >
               <LogOut size={13} aria-hidden="true" />
               <span>Sign Out</span>
@@ -94,59 +97,60 @@ export function PortalNavigation() {
             <button
               type="button"
               onClick={() => setIsOpen(!isOpen)}
-              className="text-white/80 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent p-2 rounded-xs min-h-[44px] min-w-[44px] flex items-center justify-center transition-colors"
+              className="text-white hover:text-blue-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 p-2 rounded-lg min-h-[44px] min-w-[44px] flex items-center justify-center transition-colors"
               aria-label={isOpen ? "Close portal menu" : "Open portal menu"}
               aria-expanded={isOpen}
             >
-              {isOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+              {isOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
             </button>
           </div>
+
         </div>
       </div>
 
       {/* Mobile Drawer */}
       {isOpen && (
-        <div className="md:hidden bg-primary-light border-t border-white/10 px-4 py-3 space-y-1">
-          {navLinks.map((item) => {
-            const isActive = pathname === item.href
-            const Icon = item.icon
-            return (
-              <Link
-                key={item.name}
-                href={item.href}
-                onClick={() => setIsOpen(false)}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-xs text-xs font-semibold uppercase tracking-wider min-h-[44px] ${
-                  isActive
-                    ? 'bg-white/15 text-white font-bold'
-                    : 'text-white/70 hover:bg-white/5 hover:text-white'
-                }`}
-                aria-current={isActive ? 'page' : undefined}
-              >
-                <Icon size={18} aria-hidden="true" />
-                <span>{item.name}</span>
-              </Link>
-            )
-          })}
-          <div className="pt-3 border-t border-white/10 space-y-2">
-            <Link
-              href="/"
+        <div className="md:hidden border-t border-white/10 bg-[#0A192F] px-4 pt-3 pb-6 space-y-3">
+          <nav aria-label="Mobile Student Navigation" className="space-y-1">
+            {navLinks.map((item) => {
+              const isActive = pathname === item.href
+              const Icon = item.icon
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold tracking-wide transition-colors ${
+                    isActive
+                      ? 'bg-blue-600 text-white font-extrabold'
+                      : 'text-slate-300 hover:bg-white/10 hover:text-white'
+                  }`}
+                >
+                  <Icon size={18} aria-hidden="true" />
+                  <span>{item.name}</span>
+                </Link>
+              )
+            })}
+          </nav>
+
+          <div className="pt-3 border-t border-white/10 flex flex-col gap-2">
+            <Link 
+              href="/" 
               onClick={() => setIsOpen(false)}
-              className="flex items-center gap-3 px-3 py-2 text-xs font-mono uppercase tracking-wider text-white/70 hover:text-white min-h-[44px]"
+              className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-slate-300 hover:text-white px-4 py-2 font-bold"
             >
-              <ArrowLeft size={16} aria-hidden="true" />
-              <span>Main Website</span>
+              <ArrowLeft size={14} aria-hidden="true" />
+              <span>Return to Main Website</span>
             </Link>
-            <button
-              type="button"
-              onClick={() => {
-                setIsOpen(false)
-                handleSignOut()
-              }}
-              className="flex w-full items-center gap-3 px-3 py-2 text-xs font-mono uppercase tracking-wider text-red-300 hover:text-red-200 min-h-[44px]"
+            <Button 
+              onClick={handleSignOut} 
+              variant="secondary" 
+              fullWidth
+              className="!border-white/20 !text-white !bg-white/5 hover:!bg-white/15 gap-2 text-xs font-bold"
             >
-              <LogOut size={16} aria-hidden="true" />
+              <LogOut size={15} aria-hidden="true" />
               <span>Sign Out</span>
-            </button>
+            </Button>
           </div>
         </div>
       )}

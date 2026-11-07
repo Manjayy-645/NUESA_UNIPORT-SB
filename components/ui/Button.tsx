@@ -2,7 +2,7 @@ import React from 'react'
 import { Loader2 } from 'lucide-react'
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'gold' | 'electric'
+  variant?: 'primary' | 'secondary' | 'navy' | 'outline' | 'ghost' | 'danger' | 'gold' | 'electric'
   size?: 'sm' | 'md' | 'lg'
   fullWidth?: boolean
   isLoading?: boolean
@@ -20,23 +20,24 @@ export function Button({
   ...props 
 }: ButtonProps) {
   
-  const baseStyle = "inline-flex items-center justify-center font-medium transition-[background-color,border-color,color,box-shadow,transform] duration-200 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+  const baseStyle = "inline-flex items-center justify-center font-bold tracking-wide transition-all duration-200 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2 cursor-pointer select-none"
   const widthStyle = fullWidth ? "w-full" : ""
   
   const sizeStyles = {
-    sm: "px-3.5 py-1.5 text-xs rounded-sm min-h-[36px]",
-    md: "px-5 py-2.5 text-sm rounded-sm min-h-[44px] min-w-[44px]",
-    lg: "px-7 py-3.5 text-base rounded-sm min-h-[50px]",
+    sm: "px-3.5 py-1.5 text-xs rounded-md min-h-[36px] gap-1.5",
+    md: "px-5 py-2.5 text-sm rounded-lg min-h-[44px] min-w-[44px] gap-2",
+    lg: "px-7 py-3.5 text-base rounded-xl min-h-[50px] gap-2.5",
   }
 
   const variantStyles = {
-    primary: "bg-accent text-white hover:bg-accent-dark border border-accent active:bg-accent-dark",
-    secondary: "bg-transparent text-primary border border-primary/25 hover:bg-primary/5 hover:border-primary/50",
-    outline: "bg-transparent text-accent border border-accent hover:bg-accent/10",
-    ghost: "bg-transparent text-primary/80 hover:text-primary hover:bg-primary/5 border border-transparent",
-    danger: "bg-red-600 text-white hover:bg-red-700 border border-red-600 active:bg-red-800",
-    gold: "bg-amber-500 text-white hover:bg-amber-600 border border-amber-500 active:bg-amber-700",
-    electric: "bg-blue-600 text-white hover:bg-blue-700 border border-blue-600 active:bg-blue-800",
+    primary: "bg-blue-600 hover:bg-blue-700 text-white shadow-sm shadow-blue-600/20 active:bg-blue-800 border border-blue-600/50",
+    secondary: "bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 hover:border-slate-400 shadow-xs active:bg-slate-100",
+    navy: "bg-[#0A192F] hover:bg-[#132A4F] text-white shadow-sm shadow-slate-900/10 border border-blue-900/30 active:bg-[#060E1E]",
+    outline: "bg-transparent text-blue-600 border-2 border-blue-600 hover:bg-blue-50 active:bg-blue-100",
+    ghost: "bg-transparent text-slate-700 hover:text-slate-900 hover:bg-slate-100 border border-transparent",
+    danger: "bg-red-600 text-white hover:bg-red-700 shadow-sm shadow-red-600/20 active:bg-red-800 border border-red-600",
+    gold: "bg-amber-500 text-slate-950 hover:bg-amber-400 shadow-sm shadow-amber-500/20 active:bg-amber-600 border border-amber-500",
+    electric: "bg-blue-600 hover:bg-blue-700 text-white shadow-sm shadow-blue-600/20 active:bg-blue-800 border border-blue-600",
   }
 
   return (

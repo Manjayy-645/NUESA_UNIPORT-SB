@@ -77,8 +77,8 @@ export function OnboardingForm({ completeProfileAction }: { completeProfileActio
         </div>
       </div>
       
-      <button type="submit" disabled={loading} className="w-full bg-blue-900 text-white font-bold py-3.5 px-4 rounded-md hover:bg-blue-950 transition-all disabled:opacity-50 border border-red-600/30">
-        {loading ? 'Saving Profile...' : 'Complete SEEES Profile'}
+      <button type="submit" disabled={loading} className="w-full bg-blue-600 text-white font-bold py-3.5 px-4 rounded-xl hover:bg-blue-700 transition-all disabled:opacity-50 shadow-sm shadow-blue-600/30">
+        {loading ? 'Saving Profile...' : 'Complete EEE Student Profile'}
       </button>
     </form>
   )

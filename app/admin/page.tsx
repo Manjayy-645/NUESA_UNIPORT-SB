@@ -16,7 +16,7 @@ import {
 } from 'lucide-react'
 
 export const metadata = {
-  title: 'Admin Overview | SEEES Back-Office',
+  title: 'Admin Overview | EEE Back-Office',
   description: 'Executive management portal for student clearance, financial reconciliation, and departmental directories.',
 }
 

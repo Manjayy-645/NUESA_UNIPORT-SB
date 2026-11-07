@@ -1,7 +1,7 @@
 {
-  "name": "seees-uniport-website",
+  "name": "eee-uniport-portal",
   "version": "1.0.0",
-  "description": "Official SEEES UniPort Website - Society of Electrical & Electronic Engineering Students, Department of Electrical & Electronic Engineering",
+  "description": "Official Department of Electrical & Electronics Engineering Portal, University of Port Harcourt (UniPort)",
   "main": "index.js",
   "type": "module",
   "directories": {

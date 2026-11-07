@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/Button'
+import { Zap } from 'lucide-react'
 
 export function CheckoutButton({ studentId, email, amount, session, semester }: { studentId: string, email: string, amount: number, session: string, semester: string }) {
   const [loading, setLoading] = useState(false)
@@ -72,12 +73,13 @@ export function CheckoutButton({ studentId, email, amount, session, semester }: 
         variant="primary"
         size="lg"
         fullWidth
-        className="font-sans font-semibold tracking-wide"
+        className="font-bold tracking-wide shadow-sm shadow-blue-600/30 gap-2"
       >
-        <span>Pay Faculty Dues (₦{amount.toLocaleString()})</span>
+        <Zap size={18} className="fill-current" aria-hidden="true" />
+        <span>Pay Departmental Dues (₦{amount.toLocaleString()})</span>
       </Button>
       {errorMsg && (
-        <p className="text-red-600 font-sans text-xs mt-3 text-center" role="alert">
+        <p className="text-red-600 font-sans text-xs mt-3 text-center font-bold" role="alert">
           {errorMsg}
         </p>
       )}

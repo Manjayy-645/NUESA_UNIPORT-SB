@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/Button'
 import { GraduationCap, Search, CheckCircle2, AlertCircle, Phone, Mail } from 'lucide-react'
 
 export const metadata = {
-  title: 'Student Roster | SEEES Back-Office',
+  title: 'Student Roster | EEE Back-Office',
   description: 'Manage registered students, review clearance status, and audit matriculation records.',
 }
 

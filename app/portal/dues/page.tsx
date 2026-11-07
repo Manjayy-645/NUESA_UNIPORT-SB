@@ -8,8 +8,8 @@ import { Button } from '@/components/ui/Button'
 import { CheckCircle2, ShieldCheck, ArrowLeft, Receipt, Lock } from 'lucide-react'
 
 export const metadata = {
-  title: 'Pay SEEES Departmental Dues | SEEES UniPort Portal',
-  description: 'Official checkout and payment gateway for SEEES Departmental dues, Department of Electrical & Electronic Engineering.',
+  title: 'Pay Departmental Dues | Electrical & Electronics Engineering UniPort',
+  description: 'Official checkout and payment gateway for Departmental Dues, Department of Electrical & Electronics Engineering, University of Port Harcourt.',
 }
 
 export default async function DuesPage() {
@@ -46,49 +46,49 @@ export default async function DuesPage() {
       <div>
         <Link 
           href="/portal" 
-          className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-primary/60 hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-xs p-1"
+          className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-slate-500 hover:text-blue-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 rounded-md p-1 font-bold"
         >
           <ArrowLeft size={14} aria-hidden="true" />
           <span>Back to Dashboard</span>
         </Link>
       </div>
 
-      <div className="pb-4 border-b border-primary/10">
-        <span className="font-mono text-xs uppercase tracking-widest text-primary/60 font-semibold block mb-1">
-          Fee Assessment & Clearance
+      <div className="pb-4 border-b border-slate-200">
+        <span className="font-mono text-xs uppercase tracking-widest text-blue-600 font-bold block mb-1">
+          Fee Assessment &amp; Clearance
         </span>
-        <h1 className="font-serif text-2xl sm:text-3xl font-semibold text-primary tracking-tight">
-          SEEES Departmental Dues Checkout
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0A192F] tracking-tight">
+          Departmental Dues Checkout
         </h1>
-        <p className="font-sans text-xs sm:text-sm text-primary/70 mt-1">
-          Authorized dues payment terminal for the Society of Electrical and Electronic Engineering Students (SEEES).
+        <p className="font-sans text-xs sm:text-sm text-slate-500 mt-1">
+          Official statutory dues terminal for the Department of Electrical &amp; Electronics Engineering.
         </p>
       </div>
 
-      <Card variant="default" className="p-6 sm:p-8 space-y-8">
+      <Card variant="default" className="p-6 sm:p-8 space-y-8 shadow-card">
         
         {/* Student Credential Ledger */}
         <div>
-          <h2 className="font-serif text-base font-semibold text-primary mb-3">
+          <h2 className="text-base font-bold text-[#0A192F] mb-3">
             Billed Student Particulars
           </h2>
-          <div className="bg-primary/[0.02] border border-primary/15 rounded-xs p-5">
+          <div className="bg-slate-50 border border-slate-200 rounded-xl p-5">
             <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-sans">
               <div>
-                <dt className="font-mono text-[10px] uppercase tracking-wider text-primary/50">Full Student Name</dt>
-                <dd className="font-bold text-sm text-primary mt-0.5">{student.full_name}</dd>
+                <dt className="font-mono text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Full Student Name</dt>
+                <dd className="font-bold text-sm text-[#0A192F] mt-0.5">{student.full_name}</dd>
               </div>
               <div>
-                <dt className="font-mono text-[10px] uppercase tracking-wider text-primary/50">Matriculation Number</dt>
-                <dd className="font-mono font-bold text-sm text-primary mt-0.5">{student.mat_no}</dd>
+                <dt className="font-mono text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Matriculation Number</dt>
+                <dd className="font-mono font-bold text-sm text-blue-600 mt-0.5">{student.mat_no}</dd>
               </div>
               <div>
-                <dt className="font-mono text-[10px] uppercase tracking-wider text-primary/50">Department & Level</dt>
-                <dd className="font-medium text-primary mt-0.5">{student.department} Engineering &bull; {student.level}L</dd>
+                <dt className="font-mono text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Department &amp; Level</dt>
+                <dd className="font-bold text-[#0A192F] mt-0.5">{student.department} Engineering &bull; {student.level}L</dd>
               </div>
               <div>
-                <dt className="font-mono text-[10px] uppercase tracking-wider text-primary/50">Academic Session / Semester</dt>
-                <dd className="font-medium text-primary mt-0.5">{ACTIVE_SESSION} &bull; {SEMESTER} Semester</dd>
+                <dt className="font-mono text-[10px] uppercase tracking-wider text-slate-500 font-semibold">Academic Session / Semester</dt>
+                <dd className="font-bold text-[#0A192F] mt-0.5">{ACTIVE_SESSION} &bull; {SEMESTER} Semester</dd>
               </div>
             </dl>
           </div>
@@ -96,31 +96,31 @@ export default async function DuesPage() {
 
         {/* Invoice Itemization */}
         <div>
-          <h2 className="font-serif text-base font-semibold text-primary mb-3">
+          <h2 className="text-base font-bold text-[#0A192F] mb-3">
             Assessment Breakdown
           </h2>
-          <div className="border border-primary/15 rounded-xs overflow-hidden">
+          <div className="border border-slate-200 rounded-xl overflow-hidden shadow-2xs">
             <table className="w-full text-left text-xs font-sans">
-              <thead className="bg-primary/5 border-b border-primary/10 font-mono uppercase text-primary/60">
+              <thead className="bg-[#0A192F] text-white font-mono uppercase">
                 <tr>
-                  <th scope="col" className="px-4 py-3">Description</th>
-                  <th scope="col" className="px-4 py-3">Term</th>
-                  <th scope="col" className="px-4 py-3 text-right">Amount</th>
+                  <th scope="col" className="px-4 py-3 font-bold">Description</th>
+                  <th scope="col" className="px-4 py-3 font-bold">Term</th>
+                  <th scope="col" className="px-4 py-3 text-right font-bold">Amount</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-primary/10">
+              <tbody className="divide-y divide-slate-100 bg-white">
                 <tr>
-                  <td className="px-4 py-3.5 font-medium text-primary">
-                    Annual SEEES Departmental Dues &amp; Laboratory Development Levy
+                  <td className="px-4 py-3.5 font-bold text-[#0A192F]">
+                    Annual Departmental Dues &amp; Laboratory Development Levy
                   </td>
-                  <td className="px-4 py-3.5 text-primary/70">{ACTIVE_SESSION}</td>
-                  <td className="px-4 py-3.5 text-right font-mono font-bold text-primary">₦5,000.00</td>
+                  <td className="px-4 py-3.5 text-slate-600 font-medium">{ACTIVE_SESSION}</td>
+                  <td className="px-4 py-3.5 text-right font-mono font-bold text-[#0A192F]">₦5,000.00</td>
                 </tr>
               </tbody>
-              <tfoot className="bg-primary/[0.03] border-t border-primary/15">
+              <tfoot className="bg-slate-50 border-t border-slate-200">
                 <tr>
-                  <th scope="row" colSpan={2} className="px-4 py-3.5 font-bold uppercase font-mono text-primary">Total Payable:</th>
-                  <td className="px-4 py-3.5 text-right font-serif text-xl sm:text-2xl font-bold text-primary">₦5,000.00</td>
+                  <th scope="row" colSpan={2} className="px-4 py-3.5 font-extrabold uppercase font-mono text-[#0A192F]">Total Payable:</th>
+                  <td className="px-4 py-3.5 text-right text-xl sm:text-2xl font-black text-blue-600">₦5,000.00</td>
                 </tr>
               </tfoot>
             </table>
@@ -129,18 +129,18 @@ export default async function DuesPage() {
 
         {/* Payment Action or Confirmation Stamp */}
         {existingPayment ? (
-          <div className="bg-emerald-50 border border-emerald-600/30 p-6 rounded-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="bg-emerald-50 border border-emerald-300 p-6 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="flex items-start gap-3">
               <CheckCircle2 size={24} className="text-emerald-700 shrink-0 mt-0.5" aria-hidden="true" />
               <div>
-                <h3 className="font-serif text-base font-bold text-emerald-900">Payment Already Confirmed</h3>
-                <p className="font-sans text-xs text-emerald-800/80 mt-0.5">
+                <h3 className="text-base font-bold text-emerald-900">Payment Already Confirmed</h3>
+                <p className="font-sans text-xs text-emerald-800 mt-0.5">
                   Your dues for {ACTIVE_SESSION} have been cleared. Receipt reference: <code className="font-mono font-bold">{existingPayment.paystack_reference}</code>.
                 </p>
               </div>
             </div>
             <Link href={`/portal/receipts/${existingPayment.paystack_reference}`}>
-              <Button variant="secondary" size="sm" className="!border-emerald-600/40 !text-emerald-800 hover:!bg-emerald-100 gap-1.5 shrink-0">
+              <Button variant="secondary" size="sm" className="!border-emerald-400 !text-emerald-800 hover:!bg-emerald-100 gap-1.5 shrink-0 font-bold">
                 <Receipt size={14} aria-hidden="true" />
                 <span>View Receipt</span>
               </Button>
@@ -157,8 +157,8 @@ export default async function DuesPage() {
                 semester={SEMESTER}
               />
             </div>
-            <div className="flex items-center justify-center gap-2 text-xs font-mono text-primary/50">
-              <Lock size={12} aria-hidden="true" />
+            <div className="flex items-center justify-center gap-2 text-xs font-mono text-slate-500 font-medium">
+              <Lock size={13} className="text-slate-400" aria-hidden="true" />
               <span>256-bit TLS Encrypted Transaction &bull; Paystack Certified PCI-DSS</span>
             </div>
           </div>

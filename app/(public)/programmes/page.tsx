@@ -349,10 +349,10 @@ export default function ProgrammesPage() {
                   in Electrical/Electronic Engineering from a recognized institution.
                 </p>
               </div>
-              <div className="pt-3 border-t border-primary/10">
-                <strong className="text-primary block font-semibold mb-1">3. Departmental Clearances:</strong>
-                <p className="text-primary/70 leading-relaxed">
-                  Admitted students complete departmental matriculation documentation and official SEEES student registration each session.
+              <div className="pt-3 border-t border-slate-200">
+                <strong className="text-[#0A192F] block font-bold mb-1">3. Departmental Clearances:</strong>
+                <p className="text-slate-600 leading-relaxed font-normal">
+                  Admitted students complete departmental matriculation documentation and official student registration each session.
                 </p>
               </div>
             </div>
@@ -361,27 +361,27 @@ export default function ProgrammesPage() {
         </div>
 
         {/* Action Callout */}
-        <div className="bg-seees-navy text-white rounded-xl p-8 sm:p-10 border-2 border-seees-gold/40 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="bg-[#0A192F] text-white rounded-2xl p-8 sm:p-10 border border-blue-900/40 shadow-card relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="max-w-2xl relative z-10">
-            <span className="bg-seees-gold text-seees-navy text-xs font-bold px-3 py-1 rounded-sm uppercase tracking-wider inline-block mb-3">
-              Join SEEES UniPort
+            <span className="bg-amber-500 text-slate-950 text-xs font-bold px-3 py-1 rounded-md uppercase tracking-wider inline-block mb-3">
+              Department of Electrical &amp; Electronics Engineering
             </span>
-            <h2 className="text-2xl sm:text-3xl text-white font-serif font-bold mb-2">
+            <h2 className="text-2xl sm:text-3xl text-white font-extrabold mb-2 tracking-tight">
               Ready to Explore Our Department?
             </h2>
-            <p className="text-gray-300 text-sm font-sans leading-relaxed">
-              Check out our qualified academic staff directory, download official lecture timetables, 
-              or pay your SEEES departmental dues to complete your session clearance.
+            <p className="text-slate-300 text-sm font-sans leading-relaxed">
+              Check out our qualified academic faculty directory, download official lecture timetables, 
+              or pay your departmental dues to complete your session clearance.
             </p>
           </div>
           <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto shrink-0 relative z-10">
             <Link href="/staff" className="w-full sm:w-auto">
-              <Button variant="gold" fullWidth>
+              <Button variant="gold" fullWidth className="font-bold">
                 Staff Directory
               </Button>
             </Link>
             <Link href="/portal/dues" className="w-full sm:w-auto">
-              <Button variant="secondary" className="!text-white !border-white/30 hover:!bg-white/10" fullWidth>
+              <Button variant="primary" fullWidth className="font-bold">
                 Pay Departmental Dues
               </Button>
             </Link>

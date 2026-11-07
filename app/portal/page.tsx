@@ -18,8 +18,8 @@ import {
 } from 'lucide-react'
 
 export const metadata = {
-  title: 'Student Dashboard | SEEES Portal',
-  description: 'Manage departmental dues, view certified clearance receipts, and access official academic schedules.',
+  title: 'Student Dashboard | EEE Department Portal',
+  description: 'Manage departmental dues, view certified clearance receipts, and access official academic schedules for Electrical & Electronics Engineering.',
 }
 
 export default async function StudentDashboard() {
@@ -59,31 +59,31 @@ export default async function StudentDashboard() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       
       {/* Editorial Dashboard Header */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-primary/10">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-slate-200">
         <div>
-          <div className="inline-flex items-center gap-2 mb-1.5">
-            <span className="w-2 h-2 rounded-2xs bg-accent inline-block" aria-hidden="true" />
-            <span className="font-mono text-xs uppercase tracking-widest text-primary/60 font-semibold">
+          <div className="inline-flex items-center gap-2 mb-1.5 px-3 py-1 bg-blue-50 border border-blue-200 rounded-full text-xs font-bold text-blue-700">
+            <span className="w-2 h-2 rounded-full bg-blue-600" aria-hidden="true" />
+            <span className="font-mono uppercase tracking-wider">
               Academic Clearance Terminal
             </span>
           </div>
-          <h1 className="font-serif text-2xl sm:text-3xl font-semibold text-primary tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0A192F] tracking-tight">
             Welcome back, {student.full_name.split(' ')[0]}
           </h1>
-          <p className="font-sans text-xs sm:text-sm text-primary/70 mt-1">
-            Department of Electrical &amp; Electronic Engineering &bull; 2025/2026 Academic Session
+          <p className="font-sans text-xs sm:text-sm text-slate-500 mt-1 font-medium">
+            Department of Electrical &amp; Electronics Engineering &bull; 2025/2026 Academic Session
           </p>
         </div>
 
         <div className="flex items-center gap-2">
           {duesPaidThisSession ? (
-            <Badge variant="success" className="px-3 py-1 font-mono text-xs font-bold gap-1.5">
-              <CheckCircle2 size={13} aria-hidden="true" />
+            <Badge variant="success" className="px-3.5 py-1.5 font-mono text-xs font-bold gap-1.5 shadow-2xs">
+              <CheckCircle2 size={14} aria-hidden="true" />
               <span>Dues Cleared (2025/2026)</span>
             </Badge>
           ) : (
-            <Badge variant="gold" className="px-3 py-1 font-mono text-xs font-bold gap-1.5">
-              <AlertCircle size={13} aria-hidden="true" />
+            <Badge variant="gold" className="px-3.5 py-1.5 font-mono text-xs font-bold gap-1.5 shadow-2xs">
+              <AlertCircle size={14} aria-hidden="true" />
               <span>Dues Outstanding</span>
             </Badge>
           )}
@@ -95,39 +95,39 @@ export default async function StudentDashboard() {
         {/* Left Column: Student Identity & Clearance Status (Cols 1-4) */}
         <div className="lg:col-span-4 space-y-6">
           
-          <Card variant="default" className="p-6 space-y-6">
+          <Card variant="default" className="p-6 space-y-6 shadow-xs">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-primary/5 border border-primary/15 rounded-xs flex items-center justify-center text-primary shrink-0">
+              <div className="w-12 h-12 bg-blue-50 border border-blue-200 rounded-xl flex items-center justify-center text-blue-600 shrink-0">
                 <UserCircle size={28} aria-hidden="true" />
               </div>
               <div>
-                <h2 className="font-serif text-base font-semibold text-primary leading-tight">
+                <h2 className="text-base font-bold text-[#0A192F] leading-tight">
                   {student.full_name}
                 </h2>
-                <span className="font-mono text-xs text-primary/60 block mt-0.5">
+                <span className="font-mono text-xs text-slate-500 block mt-0.5 font-bold">
                   {student.mat_no}
                 </span>
-                <span className="font-sans text-xs text-accent font-semibold block mt-0.5">
+                <span className="font-sans text-xs text-blue-600 font-bold block mt-0.5">
                   {student.department} Engineering
                 </span>
               </div>
             </div>
 
-            <div className="border-t border-b border-primary/10 py-4 space-y-2.5 text-xs">
+            <div className="border-t border-b border-slate-100 py-4 space-y-2.5 text-xs">
               <div className="flex justify-between items-center">
-                <span className="font-mono text-primary/50 uppercase">Academic Level</span>
-                <span className="font-sans font-bold text-primary">{student.level} Level</span>
+                <span className="font-mono text-slate-500 uppercase font-semibold">Academic Level</span>
+                <span className="font-sans font-bold text-[#0A192F]">{student.level} Level</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="font-mono text-primary/50 uppercase">Phone</span>
-                <span className="font-mono text-primary/80">{student.phone || 'Not Registered'}</span>
+                <span className="font-mono text-slate-500 uppercase font-semibold">Phone</span>
+                <span className="font-mono text-slate-700 font-bold">{student.phone || 'Not Registered'}</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="font-mono text-primary/50 uppercase">Clearance Status</span>
+                <span className="font-mono text-slate-500 uppercase font-semibold">Clearance Status</span>
                 {duesPaidThisSession ? (
-                  <span className="text-emerald-700 font-semibold font-mono">Cleared for Exams</span>
+                  <span className="text-emerald-700 font-bold font-mono">Cleared for Exams</span>
                 ) : (
-                  <span className="text-amber-800 font-semibold font-mono">Pending Dues Payment</span>
+                  <span className="text-amber-700 font-bold font-mono">Pending Dues Payment</span>
                 )}
               </div>
             </div>
@@ -135,16 +135,16 @@ export default async function StudentDashboard() {
             <div>
               {duesPaidThisSession ? (
                 <Link href="/portal/receipts" className="block w-full">
-                  <Button variant="secondary" fullWidth className="gap-2">
+                  <Button variant="secondary" fullWidth className="gap-2 font-bold">
                     <Receipt size={16} aria-hidden="true" />
                     <span>View Official Receipts</span>
                   </Button>
                 </Link>
               ) : (
                 <Link href="/portal/dues" className="block w-full">
-                  <Button variant="primary" fullWidth className="gap-2 bg-red-600 hover:bg-red-700 text-white font-bold">
+                  <Button variant="primary" fullWidth className="gap-2 font-bold shadow-sm shadow-blue-600/30">
                     <CreditCard size={16} aria-hidden="true" />
-                    <span>Pay SEEES Dues (₦5,000)</span>
+                    <span>Pay Departmental Dues (₦5,000)</span>
                   </Button>
                 </Link>
               )}
@@ -153,15 +153,15 @@ export default async function StudentDashboard() {
 
           {/* Alert Notice for Unpaid Dues */}
           {!duesPaidThisSession && (
-            <div className="bg-amber-50 border border-amber-600/30 p-5 rounded-xs space-y-2">
-              <div className="flex items-center gap-2 text-amber-900 font-serif font-semibold text-sm">
-                <AlertCircle size={16} className="text-amber-700" aria-hidden="true" />
+            <div className="bg-amber-50/80 border border-amber-200 p-5 rounded-xl space-y-2.5 shadow-2xs">
+              <div className="flex items-center gap-2 text-amber-950 font-bold text-sm">
+                <AlertCircle size={17} className="text-amber-600 shrink-0" aria-hidden="true" />
                 <span>Departmental Clearance Requirement</span>
               </div>
-              <p className="font-sans text-xs text-amber-900/80 leading-relaxed">
-                SEEES Departmental Dues receipt is required for course form signing, departmental clearance, and entry into electrical laboratories.
+              <p className="font-sans text-xs text-amber-900 leading-relaxed font-normal">
+                Departmental Dues receipt is required for course form signing, departmental clearance, and entry into electrical &amp; electronics laboratories.
               </p>
-              <Link href="/portal/dues" className="inline-block pt-1 text-xs font-mono uppercase font-bold text-red-700 hover:underline">
+              <Link href="/portal/dues" className="inline-block pt-1 text-xs font-mono uppercase font-bold text-blue-700 hover:text-blue-900 hover:underline">
                 Complete Payment Now &rarr;
               </Link>
             </div>
@@ -176,12 +176,12 @@ export default async function StudentDashboard() {
           <section aria-labelledby="recent-payments-heading">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <Receipt size={18} className="text-accent" aria-hidden="true" />
-                <h2 id="recent-payments-heading" className="font-serif text-lg font-semibold text-primary">
-                  Payment History & Receipts
+                <Receipt size={18} className="text-blue-600" aria-hidden="true" />
+                <h2 id="recent-payments-heading" className="text-lg font-bold text-[#0A192F]">
+                  Payment History &amp; Receipts
                 </h2>
               </div>
-              <Link href="/portal/receipts" className="text-xs font-mono uppercase tracking-wider text-accent font-semibold hover:underline">
+              <Link href="/portal/receipts" className="text-xs font-mono uppercase tracking-wider text-blue-600 font-bold hover:underline">
                 View All Receipts &rarr;
               </Link>
             </div>
@@ -189,37 +189,37 @@ export default async function StudentDashboard() {
             {payments && payments.length > 0 ? (
               <div className="space-y-3">
                 {payments.map(payment => (
-                  <Card key={payment.id} variant="default" className="p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 hover:border-primary/30 transition-colors">
+                  <Card key={payment.id} variant="default" className="p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 hover:border-slate-300 transition-colors">
                     <div className="flex items-center gap-3.5">
-                      <div className={`w-9 h-9 rounded-2xs flex items-center justify-center shrink-0 ${
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
                         payment.status === 'success' 
-                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-600/25' 
-                          : 'bg-amber-50 text-amber-700 border border-amber-600/25'
+                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' 
+                          : 'bg-amber-50 text-amber-700 border border-amber-200'
                       }`}>
-                        <CreditCard size={16} aria-hidden="true" />
+                        <CreditCard size={18} aria-hidden="true" />
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="font-serif text-sm font-semibold text-primary">
-                            SEEES Departmental Dues ({payment.session})
+                          <span className="text-sm font-bold text-[#0A192F]">
+                            Departmental Dues ({payment.session})
                           </span>
                           <Badge variant={payment.status === 'success' ? 'success' : 'gold'}>
                             {payment.status}
                           </Badge>
                         </div>
-                        <span className="font-mono text-[11px] text-primary/50 block mt-0.5">
+                        <span className="font-mono text-[11px] text-slate-500 block mt-0.5">
                           Ref: {payment.paystack_reference} &bull; {payment.paid_at ? new Date(payment.paid_at).toLocaleDateString('en-GB') : 'Pending'}
                         </span>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-3 self-end sm:self-center">
-                      <span className="font-mono text-sm font-bold text-primary">
+                      <span className="font-mono text-sm font-bold text-[#0A192F]">
                         ₦{Number(payment.amount).toLocaleString()}
                       </span>
                       {payment.status === 'success' && (
                         <Link href={`/portal/receipts/${payment.paystack_reference}`}>
-                          <Button variant="secondary" size="sm" className="text-xs font-mono uppercase">
+                          <Button variant="secondary" size="sm" className="text-xs font-mono uppercase font-bold">
                             Receipt
                           </Button>
                         </Link>
@@ -229,11 +229,11 @@ export default async function StudentDashboard() {
                 ))}
               </div>
             ) : (
-              <div className="p-8 text-center border border-dashed border-primary/20 rounded-xs bg-white">
-                <p className="font-sans text-xs text-primary/60 mb-3">No payments recorded in your student profile.</p>
+              <div className="p-8 text-center border-2 border-dashed border-slate-200 rounded-xl bg-white">
+                <p className="font-sans text-xs text-slate-500 mb-3">No payments recorded in your student profile.</p>
                 <Link href="/portal/dues">
-                  <Button variant="primary" size="sm" className="bg-red-600 hover:bg-red-700 text-white font-bold">
-                    Pay SEEES Departmental Dues
+                  <Button variant="primary" size="sm" className="font-bold">
+                    Pay Departmental Dues
                   </Button>
                 </Link>
               </div>
@@ -244,42 +244,42 @@ export default async function StudentDashboard() {
           <section aria-labelledby="documents-heading">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
-                <FileText size={18} className="text-accent" aria-hidden="true" />
-                <h2 id="documents-heading" className="font-serif text-lg font-semibold text-primary">
+                <FileText size={18} className="text-blue-600" aria-hidden="true" />
+                <h2 id="documents-heading" className="text-lg font-bold text-[#0A192F]">
                   Official Academic Documents
                 </h2>
               </div>
-              <Link href="/documents" className="text-xs font-mono uppercase tracking-wider text-accent font-semibold hover:underline">
+              <Link href="/documents" className="text-xs font-mono uppercase tracking-wider text-blue-600 font-bold hover:underline">
                 Full Document Hub &rarr;
               </Link>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {documents?.map(doc => (
-                <Card key={doc.id} variant="default" className="p-5 flex flex-col justify-between group hover:border-accent/40 transition-colors">
+                <Card key={doc.id} variant="default" className="p-5 flex flex-col justify-between group hover:border-blue-300 transition-colors">
                   <div>
                     <div className="flex items-start justify-between mb-3">
-                      <Badge variant="neutral" className="capitalize">
+                      <Badge variant="neutral" className="capitalize font-bold">
                         {doc.category.replace('_', ' ')}
                       </Badge>
-                      <span className="font-mono text-[10px] text-primary/50">
+                      <span className="font-mono text-[10px] text-slate-400 font-bold">
                         Rev. {doc.revision_no || 1}
                       </span>
                     </div>
-                    <h3 className="font-serif text-sm font-semibold text-primary mb-2 line-clamp-2 group-hover:text-accent transition-colors">
+                    <h3 className="text-sm font-bold text-[#0A192F] mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
                       {doc.title}
                     </h3>
                   </div>
                   
-                  <div className="pt-4 border-t border-primary/10 flex items-center justify-between mt-auto">
-                    <span className="font-mono text-[10px] text-primary/50">
+                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between mt-auto">
+                    <span className="font-mono text-[10px] text-slate-500 font-medium">
                       {doc.session || '2025/2026'}
                     </span>
                     <a 
                       href={doc.file_url} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs font-mono uppercase tracking-wider font-semibold text-accent hover:underline"
+                      className="inline-flex items-center gap-1 text-xs font-mono uppercase tracking-wider font-bold text-blue-600 hover:text-blue-800"
                     >
                       <span>Open File</span>
                       <ArrowRight size={12} aria-hidden="true" />
@@ -289,8 +289,8 @@ export default async function StudentDashboard() {
               ))}
 
               {(!documents || documents.length === 0) && (
-                <div className="col-span-full p-8 text-center border border-dashed border-primary/20 rounded-xs bg-white">
-                  <p className="font-sans text-xs text-primary/60">No academic documents published recently.</p>
+                <div className="col-span-full p-8 text-center border-2 border-dashed border-slate-200 rounded-xl bg-white">
+                  <p className="font-sans text-xs text-slate-500">No academic documents published recently.</p>
                 </div>
               )}
             </div>
